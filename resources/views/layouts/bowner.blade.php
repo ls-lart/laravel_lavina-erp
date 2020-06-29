@@ -42,16 +42,23 @@
                             
                             
                              @if(Auth::user()->access == 'production' || Auth::user()->access == 'manager')
-
-                            
-                            <li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
-                                
-                            </li>
-                               
-                           
+                                <li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
+                                </li>
+                            @else
+                                <li><a href="#"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
+                                </li>
                             @endif                
 
-                            
+                            @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'hr_manager')
+                            <li><a href="{{ route('bowner.humans.index') }}"><i class="fa fa-users"></i> Human Resource </a>
+                                <!--<ul class="nav child_menu">
+                                    <li><a >All Employees</a></li>
+                                    <li><a href="{{ route('bowner.humans.create') }}">Add Employee</a></li>
+                                    <li><a href="{{ route('bowner.salaries.index') }}">Salary</a></li>
+                                    <li><a href="{{ route('bowner.leaves.index') }}">Leave</a></li>
+                                </ul>-->
+                            </li> 
+                            @endif 
 
                             
 
