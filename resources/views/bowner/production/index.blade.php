@@ -19,7 +19,7 @@
 
 	<li  style="float: right;" >
 
-		<a href="{{route('bowner.production.shift.show')}}" class="btn btn btn-default btn-xs" style="padding: 5px 10px;"><i class="fa fa-hourglass"></i> Shift Report</a>
+		<a href="{{route('bowner.production.shift.show')}}" class="btn btn btn-default btn-xs" style="padding: 5px 10px;"><i class="fa fa-hourglass"></i> Shifts & Reports</a>
 	</li>
 	<li  style="float: right;" >
 
