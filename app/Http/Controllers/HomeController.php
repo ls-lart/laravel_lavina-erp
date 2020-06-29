@@ -26,21 +26,29 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            if (Auth::user()->isBowner()) {
-              return redirect('/bowner');
-            } elseif (Auth::user()->isProduction()) {
-                 return redirect('/bowner/production');
-            }elseif (Auth::user()->isShiftLeader()) {
-                 return redirect('/production/shift_report/show');
-            }elseif (Auth::user()->isManager()) {
-                return redirect('/manager');
-              } elseif (Auth::user()->isAdmin()) {
-                  return redirect('/admin');
-                } elseif (Auth::user()->isEmployee()) {
-                    return redirect('/orders');
-                  } else {
-                      return view('home');
-                    } 
-        } 
+
+    if (Auth::user()->isBowner()) {
+        return redirect('/bowner');
+    }elseif (Auth::user()->isManager()) {
+        return redirect('/manager');
+    } elseif (Auth::user()->isAdmin()) {
+        return redirect('/admin');
+    } elseif (Auth::user()->isEmployee()) {
+            // check user access 
+            if(Auth::user()->access == 'production'){
+                return redirect('/bowner/production');
+            }else{
+                 return view('home');
+            }
+      
+    }elseif (Auth::user()->isProduction()) {
+        return redirect('/bowner');
+    }elseif (Auth::user()->isShiftLeader()) {
+        return redirect('/bowner');
+    } else {
+        return view('home');
+    } 
+
+    } 
     }
 }

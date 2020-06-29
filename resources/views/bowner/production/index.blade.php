@@ -19,7 +19,7 @@
 
 	<li  style="float: right;" >
 
-		<a href="{{route('bowner.production.shift.show')}}" class="btn btn btn-default btn-xs" style="padding: 5px 10px;"><i class="fa fa-hourglass"></i> Shifts & Reports</a>
+		<a href="{{route('production.shift.show')}}" class="btn btn btn-default btn-xs" style="padding: 5px 10px;"><i class="fa fa-hourglass"></i> Shifts & Reports</a>
 	</li>
 	<li  style="float: right;" >
 
@@ -147,7 +147,7 @@
 							<td><div style="display: inline-flex;">
 
 								<!-- Complete button -->
-								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('bowner.production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
+								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
 
 							</div></td>
 
@@ -186,7 +186,7 @@
 							<td><div style="display: inline-flex;">
 
 								<!-- Complete button -->
-								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('bowner.production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
+								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
 
 							</div></td>
 
@@ -367,7 +367,7 @@
 							<td> <div style="display: inline-flex;">
 
 								<!-- Complete button -->
-								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="Shift Details" href="{{route('bowner.production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
+								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="Shift Details" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
 
 
 								

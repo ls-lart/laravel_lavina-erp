@@ -162,13 +162,7 @@ Route::group(['middleware'=>'auth'], function(){
 
 });
 // BusinessOwner_Manager middleware
-Route::group(['middleware' => 'bowner_manager', 'as' => 'bowner.'], function() {
-
-	Route::get('manager', function(){
-		return view('bowner.index');
-	});
-
-	// Production route
+// Production route
 	Route::resource('bowner/production', 'ProductionController');
 
 	Route::get('bowner/complete_production/{o_qty}/{p_id}/{p_qty}',[
@@ -207,6 +201,15 @@ Route::group(['middleware' => 'bowner_manager', 'as' => 'bowner.'], function() {
 		'as' => 'production.shift.store.pack'
 
 	]);
+
+	
+Route::group(['middleware' => 'bowner_manager', 'as' => 'bowner.'], function() {
+
+	Route::get('manager', function(){
+		return view('bowner.index');
+	});
+
+	
 	
 
 	// Inventories route

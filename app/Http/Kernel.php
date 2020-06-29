@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'bowner' => \App\Http\Middleware\Bowner::class,
         'bowner_employee' => \App\Http\Middleware\BownerEmployee::class,
+        'bowner_productio ' => \App\Http\Middleware\BownerProduction::class,
         'bowner_manager' => \App\Http\Middleware\BownerManager::class,
     ];
 }
