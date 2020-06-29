@@ -37,6 +37,8 @@ class HomeController extends Controller
             // check user access 
             if(Auth::user()->access == 'production'){
                 return redirect('/bowner/production');
+            }else if (Auth::user()->access == 'packaging' || Auth::user()->access == 'manfacturing'){
+                return redirect('/production/shift_report/show');
             }else{
                  return view('home');
             }

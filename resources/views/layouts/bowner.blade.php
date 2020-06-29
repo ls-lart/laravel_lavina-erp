@@ -41,15 +41,15 @@
                            
                             
                             
-                            
+                             @if(Auth::user()->access == 'production' || Auth::user()->access == 'manager')
 
                             
                             <li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
                                 
                             </li>
                                
-                            @if(Auth::user()->isBowner())
-                           @endif                
+                           
+                            @endif                
 
                             
 
