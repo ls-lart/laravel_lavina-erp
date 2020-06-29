@@ -25,7 +25,7 @@
 
 		<div class="form-group col-sm-6 has-feedback">
 			{!! Form::label('birth', 'Date of Birth (*):') !!}
-			{!! Form::text('birth', null, ['class'=>'form-control', 'required']) !!}
+			{!! Form::text('birth', null, ['class'=>'form-control']) !!}
 			<span class="glyphicon glyphicon-calendar form-control-feedback" style="right: 10px; top: 22px;"></span>
 		</div>
 	</div>
@@ -38,19 +38,19 @@
 		
 		<div class="form-group col-sm-6">
 			{!! Form::label('phone', 'Phone (*):') !!}
-			{!! Form::text('phone', null, ['class'=>'form-control', 'required']) !!}
+			{!! Form::text('phone', null, ['class'=>'form-control']) !!}
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="form-group col-sm-6">
 			{!! Form::label('idnum', 'ID# (*):') !!}
-			{!! Form::text('idnum', null, ['class'=>'form-control', 'required']) !!}
+			{!! Form::text('idnum', null, ['class'=>'form-control']) !!}
 		</div>
 
 		<div class="form-group col-sm-6">
 			{!! Form::label('address1', 'Address 1 (*):') !!}
-			{!! Form::text('address1', null, ['class'=>'form-control', 'required']) !!}
+			{!! Form::text('address1', null, ['class'=>'form-control']) !!}
 		</div>
 	</div>
 

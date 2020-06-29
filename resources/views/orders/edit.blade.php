@@ -24,6 +24,7 @@
 			    <thead>
 			      <tr>
 			        <th>#</th>
+			        <th>Image</th>
 			        <th>Product</th>
 			        <th>Price/UOM</th>
 			        <th>UOM</th>
@@ -43,8 +44,9 @@
 				@foreach ($details as $detail)
 				  	<tr>
 						<td>{{ $i++ }}</td>
+						<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src="{{ $detail->product->image }}"/> </td>
 						<td>{{ $detail->product->name }}</td>
-						<td>{{ $detail->product->cost }}</td>
+						<td>{{ $detail->total_cost / $detail->quantity }} </td>
 						<td>{{ $detail->product->unit->name }}</td>
 						<td>{{ $detail->quantity }}</td>
 						@if (!$order->deliver)
@@ -60,8 +62,10 @@
 						<td style="background-color: #ffffe6;"><b>Not enough stock</b></td>
 					@elseif ($order->deliver == 0) 
 						<td>Ready for delivery</td>
+					@elseif ($detail->delivered == 1)
+						<td class="success"> Done Delivery</td>
 					@else
-						<td>Waiting for delivery</td>
+						<td class="warning">Waiting for delivery</td>
 					@endif
 					</tr>
 				@endforeach
@@ -86,58 +90,77 @@
 		@if (!$order->deliver)
 		<!-- Edit Order -->
 		<div role="tabpanel2" class="tab-pane fade" id="create" style="padding: 20px;">
-			<div class="row add-button">
-				<a class="btn btn-success add-product" style="margin: 0 0 10px 10px;">Add Product</a>
-			</div>
+
+
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-2 card">
+
+
+
+			
 			{!! Form::model($order, ['method'=>'PATCH', 'action'=>['OrderController@update', $order->id]]) !!}
 			<div class="clone-parent">
 			@foreach ($details as $detail)
 				<div class="row row-clone">
-					<div class="form-group col-sm-6">
-						{!! Form::label('products', 'Product (*):') !!}
+					<div class="form-group col-sm-5">
+						{!! Form::label('products', 'Product ') !!}
 						{!! Form::select('products[]', $products, $detail->product_id, ['class'=>'form-control product', 'placeholder'=>'Choose Product', 'required']) !!}
 					</div>	
 
-					<div class="form-group col-sm-5">
-						{!! Form::label('quantity', 'Quantity (*):') !!}
+					<div class="form-group col-sm-2">
+						{!! Form::label('quantity', 'Quantity ') !!}
 						{!! Form::number('quantity[]', $detail->quantity, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+					</div>
+					<div class="form-group col-sm-3">
+						{!! Form::label('total_cost', 'Price ') !!}
+						{!! Form::number('price[]', $detail->total_cost/ $detail->quantity, ['class'=>'form-control', 'min'=>0, 'required','step'=>0.1]) !!}
 					</div>
 
 					<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>
 				</div>
 			@endforeach
 			</div>
+
+			<br>
+
+			<div class="row add-button">
+				<a class="btn btn-success add-product" style="margin: 0 0 10px 10px;float: right">Add Product</a>
+			</div>
+
+			<hr>
 			
 			<div class="row">
-				<div class="form-group col-sm-6">
-					{!! Form::label('vat', 'VAT Code:') !!}
-					{!! Form::select('vat', [0=>'No', 1=>'Yes'], null, ['class'=>'form-control']) !!}
-				</div>
+				
 
-				<div class="form-group col-sm-6">
-					{!! Form::label('customer', 'Customer (*):') !!}
+				<div class="form-group col-sm-12">
+					{!! Form::label('customer', 'Customer ') !!}
 					<select name="customer" id="customer" class="form-control" required>
 						@foreach($customers as $customer)
 							<option value="{{ $customer->id }}" {{ $customer->id == $order->customer_id ? 'selected' : '' }}>{{ $customer->name .' ( '.$customer->address1 .' )' }}</option>
 						@endforeach
 					</select>
 				</div>
-			</div>
+
+				<div class="form-group col-sm-12">
+					{!! Form::label('vat', 'TAX Code:') !!}
+					{!! Form::select('vat', [0=>'No', 1=>'Yes'], null, ['class'=>'form-control']) !!}
+				</div>
 			
-			<div class="row">
-				<div class="form-group col-sm-6 has-feedback">
-					{!! Form::label('delivery_at', 'Delivery By (*):') !!}
+				<div class="form-group col-sm-12 has-feedback">
+					{!! Form::label('delivery_at', 'Delivery By ') !!}
 					{!! Form::text('delivery_at', $value=$delivery_at, ['class'=>'form-control']) !!}
 					<span class="glyphicon glyphicon-calendar form-control-feedback" style="right: 10px; top: 22px;"></span>
 				</div>
 
-				<div class="form-group col-sm-6">
+				<div class="form-group col-sm-12">
 					{!! Form::label('note', 'Note:') !!}
 					{!! Form::textarea('note', null, ['size'=>'30x5', 'class'=>'form-control']) !!}
 				</div>
 			</div>
+
+			<hr>
 	
-			<div class="form-group col-sm-6">
+			<div class="form-group col-sm-6" style="text-align: right;">
 				{!! Form::submit('Save', ['class'=>'btn btn-primary col-sm-3']) !!}
 				<a class="btn btn-warning col-sm-3" href="{{ route('orders.index') }}">Cancel</a>
 			</div>
@@ -149,6 +172,10 @@
 					<li>Products chosen are duplicated.</li>
 				</ul>
 			</div>
+
+		</div>
+	</div>
+
 		</div>
 		<!-- End Edit Order .tab-pane -->
 		@endif
@@ -164,7 +191,7 @@
 			format: 'DD-MM-YYYY',
 			singleDatePicker: true,
 			showDropdowns: true,
-			minDate: moment(),
+			//minDate: moment(),
 		},
 		function(start, end, label) {
 			var years = moment().diff(start, 'years');

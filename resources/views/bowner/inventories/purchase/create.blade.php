@@ -2,40 +2,73 @@
 
 @section('content')
 
-	<h1>Purchase Material</h1>
+	<h4 style="text-align: center;">Purchase Product</h4>
+	<br>
 
-	{!! Form::open(['method'=>'POST', 'action'=>'MaterialPurchaseController@store', 'class'=>'form-group']) !!}
+	{!! Form::open(['method'=>'POST', 'action'=>'SupplierController@storeProductPurchase', 'class'=>'form-group']) !!}
 	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::label('material_id', 'Material (*):') !!}
-			<select name="material_id" id="material_id" class="form-control" required>
-				<option value="" selected>Choose Material</option>
-				@foreach($materials as $material)
-					<option value="{{ $material->id }}">{{ $material->name .' ('.$material->unit->name .')'}}</option>
-				@endforeach
+		<div class="col-sm-8 col-sm-offset-2 card">
+			
+
+			<div class="form-group col-sm-12 has-feedback">
+			{!! Form::label('created_at', 'Date ') !!}
+			{!! Form::text('created_at', null, ['class'=>'form-control']) !!}
+			<span class="glyphicon glyphicon-calendar form-control-feedback" style="right: 10px; top: 22px;"></span>
+			</div>
+
+
+			<div class="form-group col-sm-12">
+			{!! Form::label('product_id', 'Product ') !!}
+			<select name="product_id" id="product_id" class="form-control" required>
+			
+			
+					<option value="{{ $product->id }}">{{ $product->name .' ('.$product->unit->name .')'}}</option>
+			
 			</select>
-		</div>	
+			</div>
 
-		<div class="form-group col-sm-6">
-			{!! Form::label('supplier_id', 'Supplier (*):') !!}
+			<div class="form-group col-sm-12">
+			{!! Form::label('supplier_id', 'Supplier ') !!}
 			{!! Form::select('supplier_id', [''=>'Choose Supplier'] + $suppliers, null, ['class'=>'form-control', 'required']) !!}
-		</div>
-	</div>	
-	
-	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::label('quantity', 'Purchase Quantity (*):') !!}
+			</div>
+			
+			<div class="form-group col-sm-12">
+			{!! Form::label('quantity', 'Purchase Quantity ') !!}
 			{!! Form::number('quantity', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
-		</div>
-	</div>
+			</div>
 
-	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::submit('Purchase Material', ['class'=>'btn btn-primary']) !!}
-			<a class="btn btn-warning" href="{{URL('/bowner/inventories/material/purchase')}}">Cancel</a>
+			<div class="form-group col-sm-12">
+			{!! Form::label('price', 'Purchase Price ') !!}
+			{!! Form::number('price', null, ['class'=>'form-control', 'min'=>0, 'required' , 'step' => '0.1']) !!}
+			</div>
+
+			<div class="form-group col-sm-12" style="margin-top: 1rem;">
+				{!! Form::submit('Submit Purchase Request', ['class'=>'btn btn-primary']) !!}
+				<a class="btn btn-danger" href="{{URL('/bowner/inventories/')}}">Cancel</a>
+			</div>
+
+
+
+			
 		</div>
 	</div>
 
 	{!! Form::close() !!}
 
+@stop
+
+@section('scripts')
+	<script type="text/javascript">
+	$(function() {
+		$('input[id="start_day"], input[id="created_at"]').daterangepicker({
+			format: 'DD-MM-YYYY',
+			singleDatePicker: true,
+			showDropdowns: true
+		}, 
+		function(start, end, label) {
+			var years = moment().diff(start, 'years');
+			//alert("You joined " + years + " ago");
+		});
+	});
+	</script>
 @stop

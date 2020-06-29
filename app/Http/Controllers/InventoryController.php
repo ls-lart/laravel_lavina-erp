@@ -7,8 +7,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Material;
+use App\OrderDetail;
 use App\Product;
 use App\Supplier;
+use App\Purchase;
+use App\Warehouses;
+use App\Unit;
+use App\StockLog;
+use App\Order;
+use Log;
 
 class InventoryController extends Controller
 {
@@ -20,9 +27,17 @@ class InventoryController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
-        $materials = Material::all();
-        return view('bowner.inventories.index', compact('products', 'materials', 'purchases'));
+        $products   = Product::all();
+        $materials  = Material::all();
+        $purchases  = Purchase::where('status','=',0)->get();
+
+        // select orders first 
+
+        $orders     = Order::where('submit','=',1)->where('deliver','=',1)->where('status','=',0)->get();
+        $logs = StockLog::all();
+        
+        // 'purchases'
+        return view('bowner.inventories.index', compact('products', 'materials','purchases','logs','orders'));
     }
 
     /**
@@ -57,6 +72,63 @@ class InventoryController extends Controller
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createProduct()
+    {
+        //
+        $warehouses = Warehouses::all();
+         $units = Unit::all();
+        $suppliers = Supplier::pluck('name', 'id')->all();
+        return view('bowner.inventories.product.create', compact('warehouses', 'suppliers','units'));
+    }
+
+    public function createMaterial()
+    {
+        //
+        $warehouses = Warehouses::all();
+        $units = Unit::all();
+        $suppliers = Supplier::pluck('name', 'id')->all();
+        return view('bowner.inventories.material.create', compact('warehouses', 'suppliers','units'));
+    }
+    
+    public function storeProduct(Request $request)
+    {
+        //
+        $product = new Product();
+        $product->name = $request->name;
+        $product->code = $request->code;
+        $product->warehouse_id = $request->warehouse_id;
+        $product->unit_id = $request->unit_id;
+        $product->image = $request->image;
+        $product->make = $request->make;
+        $product->type = $request->type;
+        $product->color = $request->color;
+        $product->save();
+
+        Session::flash('created_message', 'The product has been submitted');
+
+        return redirect('bowner/inventories');
+    }
+
+    public function storeMaterial(Request $request){
+         //
+        $product = new Material();
+        $product->name = $request->name;
+        $product->code = $request->code;
+        $product->warehouse_id = $request->warehouse_id;
+        $product->unit_id = $request->unit_id;
+        $product->make = $request->make;
+        $product->save();
+
+        Session::flash('created_message', 'The Material has been submitted');
+
+        return redirect('bowner/inventories');
+    }
     /**
      * Show the form for editing the specified resource.
      *

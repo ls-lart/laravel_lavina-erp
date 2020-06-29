@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Material;
 use App\Purchase;
 use App\Supplier;
+use App\Product;
+use App\StockLog;
 
 class MaterialPurchaseController extends Controller
 {
@@ -121,30 +123,24 @@ class MaterialPurchaseController extends Controller
 
         $purchase->delete();
 
+        $stock_log = StockLog::where('purchase_id' , '=', $id)->first();
+        
+        $product = Product::findOrFail($stock_log->product_id);
+
+        // if product or material 
+
+        $product->quantity = $product->quantity - $stock_log->quantity;
+        
+        $stock_log->deleted = true;
+        $product->save();
+        $stock_log->save();
+
         Session::flash('deleted_message', 'The purchase has been deleted');
 
-        return redirect('/bowner/inventories/material/purchase');
+        return redirect('/bowner/inventories/');
     }
 
-    public function complete($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $purchase->status = !$purchase->status;
 
-        if ($purchase->status == 1) {
-            $material_qty = $purchase->material->quantity + $purchase->quantity;
-        } else {
-            $material_qty = $purchase->material->quantity - $purchase->quantity;
-        }
-
-        $material = Material::findOrFail($purchase->material_id);
-        $material->quantity = $material_qty;
-
-        $purchase->save();
-        $material->save();
-
-        Session::flash('updated_message', 'The purchase and material inventory have been updated');
-
-        return redirect('/bowner/inventories/material/purchase');
-    }
+    
+   
 }

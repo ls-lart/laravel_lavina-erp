@@ -4,7 +4,14 @@
 
 	@include('includes.message')
 
-	<h1>Suppliers</h1>
+	<h4>Suppliers</h4>
+	<br>
+	<div class="row">
+		<!-- Start .nav nav-tabs -->
+		<a href="/bowner/supplier/create" class="btn btn btn-success btn-xs" style="padding: 5px 10px; float: right;margin-bottom: 1rem;border:0px;margin-right: 10px;"><i class="fa fa-truck"></i> Create Supplier</a>
+	</div>
+
+	<!-- End .nav nav-tabs -->
 	<div class="table-responsive">
 		<table class="table table-hover table-bordered table-striped">
 	    <thead>

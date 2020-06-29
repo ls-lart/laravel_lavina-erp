@@ -36,24 +36,76 @@
     height: 30px;" src="{{ asset('images/logo.jpg') }}"></a>
                                 
                                 </li>
-                                  
+                             <li><a href="{{ route('bowner.chart.index') }}"><i class="fa fa-bar-chart"></i> Dashboard </a>
+                                
+                            </li>       
                             
-                           
+                            @if (Auth::user()->role_id == '3' || Auth::user()->role_id == '4' || Auth::user()->role_id == '2')
+                            <li><a href="{{ route('orders.index') }}"><i class="fa fa-opencart"></i> Sale </a>
+                                
+                            </li>
+                            <li><a href="{{ route('accounting.index') }}"><i class="fa fa-money"></i> Accounting </a>
+                                
+                            </li>
+                            @endif
                             
                             @if(Auth::user()->isBowner())
                             
 
-                            
+                            <li><a href="{{ route('bowner.inventories.index') }} "><i class="fa fa-cubes" ></i>Inventory</a>
+                                
+                            </li>
                             <li><a href="{{ route('bowner.production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
                                 
                             </li>
                                
                             
-                           @endif                
+                                         
 
+                            <li><a href="{{ route('bowner.customer.index') }}"><i class="fa fa-phone-square"></i> Clients </a>
+                                <!--<ul class="nav child_menu">
+                                    <li><a >All Customers</a></li>
+                                    <li><a href="{{ route('bowner.customer.create') }}">Create Customer</a></li>
+                                </ul>-->
+                            </li>
                             
+                            <li><a href="{{ route('bowner.supplier.index') }}"><i class="fa fa-truck"></i> Suppliers </a>
+                               <!-- <ul class="nav child_menu">
+                                    <li><a >All Suppliers</a></li>
+                                    <li><a href="{{ route('bowner.supplier.create') }}">Add Suppliers</a></li>
+                                </ul>-->
+                            </li>  
+                             <li><a href="{{ route('bowner.humans.index') }}"><i class="fa fa-users"></i> Human Resource </a>
+                                <!--<ul class="nav child_menu">
+                                    <li><a >All Employees</a></li>
+                                    <li><a href="{{ route('bowner.humans.create') }}">Add Employee</a></li>
+                                    <li><a href="{{ route('bowner.salaries.index') }}">Salary</a></li>
+                                    <li><a href="{{ route('bowner.leaves.index') }}">Leave</a></li>
+                                </ul>-->
+                            </li>      
+                            @endif  
 
-                            
+                            @if (Auth::user()->isManager())
+                            <li><a><i class="fa fa-hourglass-1"></i> Production </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ route('bowner.production.index') }}">All Productions</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a><i class="fa fa-list"></i> Inventory </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ route('bowner.inventories.index') }}">All Inventories</a></li>
+                                    <li><a href="{{ route('bowner.purchase.index') }}">Purchasing</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a><i class="fa fa-truck"></i> Supplier </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ route('bowner.supplier.index') }}">All Suppliers</a></li>
+                                    <li><a href="{{ route('bowner.supplier.create') }}">Add Suppliers</a></li>
+                                </ul>
+                            </li>       
+                            @endif  
 
                             <li class="" style="    float: right;
     margin-right: 2%;
