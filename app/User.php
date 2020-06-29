@@ -70,6 +70,23 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isProduction()
+    {
+        if ($this->role->name == "production" && $this->is_active == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isShiftLeader()
+    {
+        if ($this->role->name == "shift_leader" && $this->is_active == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    
     public function isEmployee()
     {
         if($this->role->name == "employee" && $this->is_active == 1){

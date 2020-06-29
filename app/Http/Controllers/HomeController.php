@@ -28,7 +28,11 @@ class HomeController extends Controller
         if (Auth::check()) {
             if (Auth::user()->isBowner()) {
               return redirect('/bowner');
-            } elseif (Auth::user()->isManager()) {
+            } elseif (Auth::user()->isProduction()) {
+                 return redirect('/bowner/production');
+            }elseif (Auth::user()->isShiftLeader()) {
+                 return redirect('/production/shift_report/show');
+            }elseif (Auth::user()->isManager()) {
                 return redirect('/manager');
               } elseif (Auth::user()->isAdmin()) {
                   return redirect('/admin');
