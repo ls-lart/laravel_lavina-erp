@@ -40,15 +40,15 @@
                             
                            
                             
-                            @if(Auth::user()->isBowner())
+                            
                             
 
                             
-                            <li><a href="{{ route('bowner.production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
+                            <li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
                                 
                             </li>
                                
-                            
+                            @if(Auth::user()->isBowner())
                            @endif                
 
                             
