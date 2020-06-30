@@ -396,7 +396,7 @@
       margin-right: 0px;
       margin-left: 0px;">
       <div class="form-group col-sm-12" style="margin-top: 1rem;">
-         <h4 style="text-align: center; width: 100%;">ماكينة اوفر هيد</h4>
+         <h4 style="text-align: center; width: 100%;">ماكينة الأسورة</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
          <div class="form-group col-sm-2" style="text-align: center;">

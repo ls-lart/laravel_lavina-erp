@@ -4,7 +4,40 @@
 
 	@include('includes.message')
 
-	<h1>Employees</h1>
+	<ul class="nav nav-tabs" role="tablist">
+	<!--<li role="presenstation" class="active"><a href="#workorders" aria-controls="workorders" role="tab" data-toggle="tab"><strong>Workorders</strong></a></li>
+	<li role="presenstation"><a href="#BOMS" aria-controls="BOMS" role="tab" data-toggle="tab"><strong>BOMs</strong></a></li>
+	<li role="presenstation"><a href="#TPMS" aria-controls="TPMS" role="tab" data-toggle="tab"><strong>TPMS & Breakdowns</strong></a></li>-->
+	<li role="presenstation" class="active"><a href="#employees" aria-controls="employees" role="tab" data-toggle="tab"><strong>Employees</strong></a></li>
+	<li role="presenstation"><a href="#PShiftReport" aria-controls="PShiftReport" role="tab" data-toggle="tab"><strong>Attendance</strong></a></li>
+	<li role="presenstation"><a href="#Effeciency" aria-controls="Effeciency" role="tab" data-toggle="tab"><strong> Salaries & Compensations</strong></a></li>
+
+
+	<li  style="float: right;" >
+
+		<a class="btn btn btn-default btn-xs" style="padding: 5px 10px;" href="{{ url('/bowner/humans/create') }}">Add Employee</a>
+
+	</li>
+	<li  style="float: right;" >
+
+		<a class="btn btn btn-default btn-xs" style="padding: 5px 10px;" href="{{ url('/bowner/humans/create') }}">Attendance Tool</a>
+
+	</li>
+	
+	<li  style="float: right;" >
+
+		<!--<a href="/bowner/production/bom/new" class="btn btn btn-default btn-xs" style="padding: 5px 10px; margin-right: 10px;"><i class="glyphicon glyphicon-cutlery" style="margin-right: 10px;"></i>Create BOM</a>-->
+	</li>
+		<!--<li  style="float: right;margin-right: 10px;" >
+			<a href="/bowner/inventories/product/create" class="btn btn btn-default btn-xs" style="padding: 5px 10px;"><i class="fa fa-shopping-bag"></i> Create Product</a>
+		</li>-->
+
+	</ul>
+
+	<div class="tab-content">
+		<div  role="tabpanel1" class="tab-pane fade in active" id="employees">
+			<br>
+
 	<div class="table-responsive">
 		<table class="table table-hover table-bordered table-striped">
 	    <thead>
@@ -41,7 +74,9 @@
 	    </tbody>
 	  	</table>
 	</div>
-	<a class="btn btn-info" href="{{ url('/bowner/humans/create') }}">Add Employee</a>
+</div>
+</div>
+	
 	
 @stop
 

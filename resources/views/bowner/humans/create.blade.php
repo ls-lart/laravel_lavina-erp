@@ -1,81 +1,85 @@
 @extends('layouts.bowner')
 
 @section('content')
-	<h1>Add Employee</h1>
+	<div class="row" style="margin-top: 3rem;">
+	<div class="col-sm-10 col-sm-offset-1 card"> 
 	
 	{!! Form::open(['method'=>'POST', 'action'=>'BownerHumansController@store', 'files'=>true]) !!}
 	<div class="row">
 		<div class="form-group col-sm-6">
-			{!! Form::label('name', 'Name (*):') !!}
+			{!! Form::label('name', 'Name ') !!}
 			{!! Form::text('name', null, ['class'=>'form-control', 'required']) !!}
 		</div>
 
-		<div class="form-group col-sm-6">
-			{!! Form::label('job', 'Job Title (*):') !!}
+		<div class="form-group col-sm-3">
+			{!! Form::label('job', 'Job Title ') !!}
 			{!! Form::text('job', null, ['class'=>'form-control', 'required']) !!}
+		</div>
+		<div class="form-group col-sm-3">
+					{!! Form::label('department', 'Department ') !!}
+					{!! Form::text('department', null, ['class'=>'form-control', 'required']) !!}
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="form-group col-sm-6 has-feedback">
-			{!! Form::label('start_day', 'Start Day (*):') !!}
+		<div class="form-group col-sm-3 has-feedback">
+			{!! Form::label('start_day', 'Start Day ') !!}
 			{!! Form::text('start_day', null, ['class'=>'form-control', 'required']) !!}
 			<span class="glyphicon glyphicon-calendar form-control-feedback" style="right: 10px; top: 22px;"></span>
 		</div>
 
-		<div class="form-group col-sm-6 has-feedback">
-			{!! Form::label('birth', 'Date of Birth (*):') !!}
+		<div class="form-group col-sm-3 has-feedback">
+			{!! Form::label('birth', 'Date of Birth ') !!}
 			{!! Form::text('birth', null, ['class'=>'form-control']) !!}
 			<span class="glyphicon glyphicon-calendar form-control-feedback" style="right: 10px; top: 22px;"></span>
 		</div>
-	</div>
 	
-	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::label('gender', 'Gender (*):') !!}
+		<div class="form-group col-sm-3">
+			{!! Form::label('gender', 'Gender ') !!}
 			{!! Form::select('gender', [''=>'Choose Option', 'male'=>'Male', 'female'=>'Female'], null, ['class'=>'form-control', 'required']) !!}
 		</div>
 		
-		<div class="form-group col-sm-6">
-			{!! Form::label('phone', 'Phone (*):') !!}
+		<div class="form-group col-sm-3">
+			{!! Form::label('phone', 'Phone ') !!}
 			{!! Form::text('phone', null, ['class'=>'form-control']) !!}
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::label('idnum', 'ID# (*):') !!}
+		<div class="form-group col-sm-4">
+			{!! Form::label('idnum', 'ID# ') !!}
 			{!! Form::text('idnum', null, ['class'=>'form-control']) !!}
 		</div>
 
-		<div class="form-group col-sm-6">
-			{!! Form::label('address1', 'Address 1 (*):') !!}
+		<div class="form-group col-sm-4">
+			{!! Form::label('address1', 'Address 1 ') !!}
 			{!! Form::text('address1', null, ['class'=>'form-control']) !!}
 		</div>
-	</div>
 
-	<div class="row">
-		<div class="form-group col-sm-6">
-			{!! Form::label('address2', 'Address 2:') !!}
+		<div class="form-group col-sm-4">
+			{!! Form::label('address2', 'Address 2') !!}
 			{!! Form::text('address2', null, ['class'=>'form-control']) !!}
 		</div>
 	
 		<div class="form-group col-sm-6">
-				{!! Form::label('photo', 'Photo:') !!}
+				{!! Form::label('photo', 'Photo') !!}
 				{!! Form::file('photo', null, ['class'=>'form-control']) !!}
 		</div>
 	</div>
+	<hr>
 	<div class="row">
 		<div class="form-group col-sm-3">
 			{!! Form::submit('Add Employee', ['class'=>'btn btn-primary']) !!}
+			<a class="btn btn-danger" href="{{URL('/bowner/humans')}}">Cancel</a>
 		</div>
 	</div>
 
 	{!! Form::close() !!}	
 	
-	<hr>
-	@include('includes.form_error')
 	
+	@include('includes.form_error')
+	</div>
+	</div>
 @stop
 
 @section('scripts')
