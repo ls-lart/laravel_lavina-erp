@@ -17,8 +17,9 @@
    <i class="fa fa-industry" style="font-size: 5rem;"></i>
    </a>
 </div>
+@endif 
 
-@elseif(Auth::user()->access == 'packaging' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager' )
+@if(Auth::user()->access == 'packaging' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager' )
 
 <div class="col-sm-1"></div>
 <div class="card col-sm-3" style="text-align: center;" id="btn-packaging-div">
