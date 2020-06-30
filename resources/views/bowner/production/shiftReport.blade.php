@@ -5,6 +5,9 @@
 <p style="text-align: center;"></p>
 <br><br>
 <div class="row">
+
+@if(Auth::user()->access == 'production' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
+
 <div class="col-sm-2"></div>
 <div class="card col-sm-3" style="text-align: center;" id="btn-manfacturing-div">
    <a href="#" id="btn-manfacturing">
@@ -14,6 +17,9 @@
    <i class="fa fa-industry" style="font-size: 5rem;"></i>
    </a>
 </div>
+
+@else if(Auth::user()->access == 'packaging' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager' )
+
 <div class="col-sm-1"></div>
 <div class="card col-sm-3" style="text-align: center;" id="btn-packaging-div">
    <a href="#" id="btn-packaging">
@@ -23,6 +29,8 @@
    <i class="fa fa-archive" style="font-size: 5rem;"></i>
    </a>
 </div>
+
+@endif 
 </div>
 <!--<div class="row" style="margin-top: 6rem;">
 <div class="col-sm-2"></div>
