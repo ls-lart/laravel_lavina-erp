@@ -168,7 +168,7 @@ class ProductionController extends Controller
         $leaders = Human::where('job','مشرف وردية')->get();
         $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
 
-        return view('bowner.production.packagingShiftReport', compact('leaders','wips',));
+        return view('bowner.production.packagingShiftReport', compact('leaders','wips'));
     }
 
     public function showShiftReport(){
