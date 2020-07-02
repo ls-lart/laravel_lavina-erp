@@ -6,7 +6,7 @@
 <br><br>
 <div class="row">
 
-	@if(Auth::user()->access == 'production' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
+	@if(Auth::user()->access == 'manfacturing' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
 
 	<div class="col-sm-2"></div>
 	<div class=" col-sm-3" style="text-align: center;" id="btn-manfacturing-div">
