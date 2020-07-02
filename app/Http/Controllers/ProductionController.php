@@ -141,14 +141,39 @@ class ProductionController extends Controller
         
     }
 
-    public function showShiftReport(){
+    public function showReports(){
 
-        //$breakdowns = MachineBreakdowns::pluck('name', 'id')->all();
+       // $breakdowns = MachineBreakdowns::pluck('name', 'id')->all();
+       // $machine_parts = SubMachines::all();
+       // $leaders = Human::where('job','مشرف وردية')->get();
+       // $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
+
+        //$last_3_pck = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->take(5)->get();
+        //$last_3_mnf = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->take(5)->get();
+        //, compact('last_3_mnf','last_3_pck')
+        return view('bowner.production.shiftReport');
+    }
+
+    public function showShiftReportManfacturing(){
+
         $machine_parts = SubMachines::all();
         $leaders = Human::where('job','مشرف وردية')->get();
         $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
 
-        return view('bowner.production.shiftReport', compact('leaders' , 'machine_parts','wips'));
+        return view('bowner.production.manfacturingShiftReport', compact('leaders' , 'machine_parts','wips',));
+    }
+
+    public function showShiftReportPackaging(){
+
+        $leaders = Human::where('job','مشرف وردية')->get();
+        $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
+
+        return view('bowner.production.packagingShiftReport', compact('leaders','wips',));
+    }
+
+    public function showShiftReport(){
+
+       
     }
 
     public function storeShiftReportPackaging(Request $request){
@@ -163,7 +188,7 @@ class ProductionController extends Controller
             Log::info($key);
 
             // now save the shift info 
-        if($request->quantity[$key] > 0){
+       // if($request->quantity[$key] > 0){}
 
             $shift_log = new ShiftLog();
             $shift_log->manfacturing = 0;
@@ -186,27 +211,36 @@ class ProductionController extends Controller
             $wip->quantity = $request->quantity[$key];
             $wip->shift_id = $shift_log->id;
             $wip->packaging = 1;
-            if($wip->quantity > 0)
-                $wip->save();
+            //if($wip->quantity > 0)
+            $wip->save();
 
 
             $scrap = new Scraps();
             $scrap->shift_id = $value;
             $scrap->product_id = $request->product[$key];
+            $scrap->packaging_id = $shift_log->id;
             $scrap->amount = $request->scrap[$key];
             $scrap->save();
 
 
             
             $wip = WipProduction::where('shift_id',$value)->first();
-            $packaged = $request->quantity[$key] / $wip->product->unit->equi ; 
-
+            if($wip->quantity > 0)
+                $packaged = $request->quantity[$key] / $wip->product->unit->equi ; 
+            else
+                $packaged = 0;
         
 
             if($request->done &&$request->done[$key])
                 $wip->quantity = 0;
             else
-                $wip->packaged = $request->quantity[$key];
+                if($wip->quantity > 0)
+                    $wip->packaged = $wip->packaged + $request->quantity[$key];
+
+            if($request->scrap[$key] > 0){
+                $wip->scraps = $wip->scraps + $request->scrap[$key];
+            }    
+
 
             $wip->save();
 
@@ -220,16 +254,16 @@ class ProductionController extends Controller
 
 
             // save the log to the stock log 
-            
-            $stock = new StockLog();
-            $stock->product_id = $product->id;
-            $stock->type = 'Receive - Manfacturing';
-            $stock->quantity = $packaged;
-            $stock->warehouse_id = 0;
-            $stock->notes = $request->batch[$key];
-            $stock->save();
-
+            if($packaged > 0){
+                $stock = new StockLog();
+                $stock->product_id = $product->id;
+                $stock->type = 'Receive - Manfacturing';
+                $stock->quantity = $packaged;
+                $stock->warehouse_id = 0;
+                $stock->notes = $request->batch[$key];
+                $stock->save();
             }
+            
 
         }
 

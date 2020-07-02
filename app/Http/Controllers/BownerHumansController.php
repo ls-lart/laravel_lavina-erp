@@ -9,6 +9,8 @@ use App\Http\Requests\HumanRequest;
 use App\Salary;
 use App\Human;
 use App\Leave;
+use App\Attendance;
+use Log;
 
 class BownerHumansController extends Controller
 {
@@ -21,8 +23,9 @@ class BownerHumansController extends Controller
     {
         //
 		$humans = Human::all();
+        $attendance = Attendance::all();
 
-		return view('bowner.humans.index', compact('humans'));
+		return view('bowner.humans.index', compact('humans','attendance'));
     }
 
     /**
@@ -105,6 +108,7 @@ class BownerHumansController extends Controller
 		$human = Human::findOrFail($id);
 		$day = date("d-m-Y", strtotime($human->start_day));
         $day_birth = date("d-m-Y", strtotime($human->birth));
+        
 		
 		return view('bowner.humans.edit', compact('human', 'day', 'day_birth'));
     }
@@ -134,7 +138,7 @@ class BownerHumansController extends Controller
             'job' => 'required',
         ]);
         */
-
+        
 		$input['start_day'] = date("Y-m-d", strtotime($input['start_day']));
         $input['birth'] = date("Y-m-d", strtotime($input['birth']));
 		
@@ -170,5 +174,31 @@ class BownerHumansController extends Controller
 		Session::flash('deleted_message', 'The user has been deleted');
 		
 		return redirect('/bowner/humans');
+    }
+
+    public function attendanceTool()
+    {
+        $employees = Human::orderBy('department', 'ASC')->get();
+        return view('bowner.humans.attendance',compact('employees'));
+    }
+
+    public function storeAttendance(Request $request)
+    {
+        foreach ($request->fullday as $key => $value) {
+           
+           $att = new Attendance();
+           $att->date = date("Y-m-d", strtotime($request->date));
+           $att->human_id = $value;
+           $att->fullday = 1;
+           $att->save();
+        }
+        foreach ($request->halfday as $key => $value) {
+           
+           $att = new Attendance();
+           $att->date = date("Y-m-d", strtotime($request->date));
+           $att->human_id = $value;
+            $att->halfday = 1;
+           $att->save();
+        }
     }
 }

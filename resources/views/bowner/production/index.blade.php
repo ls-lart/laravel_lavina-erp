@@ -271,18 +271,21 @@
 							<td>{{ $shift->total_breakdown_duration }}</td>
 							@if($wip)
 							<td>{{ $wip->packaged }}</td>
-							@php
-								$scrap = App\Scraps::where('shift_id',$shift->id)->first();
-							@endphp
-								@if($scrap)
-									<td> {{$scrap->amount}}</td>
-								@else
-									<td></td>
-								@endif		
 							@else
 							<td></td>
-							<td></td>
 							@endif
+
+							@php
+								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
+								$scr = 0;
+								foreach ($scraps as $scrap){
+									$scr = $scr + $scrap->amount ;
+								}
+								
+							@endphp
+
+									
+							<td>{{$scr}}</td>
 							<td>{{ $shift->notes }}</td>
 							
 						</tr>
@@ -308,14 +311,14 @@
 							<th>Shift Leader</th>
 							<th>Product Image</th>
 							<th>Product</th>
-							<th>Packaging</th>
+							<th>Packaged</th>
 							<th>Operation Duration</th>
 							<th>Operators</th>
 							<th>Effeciency</th>
 							<th>Scrap</th>
 							
 							<th>Notes</th>
-							<th>Actions</th>
+							<!--<th>Actions</th>-->
 
 						</tr>
 					</thead>
@@ -330,7 +333,7 @@
 								<td>{{ $shift->shift_type }}</td>
 								<td >{{ $shift->shift_date }}</td>
 								<td >{{ $shift->human->name }}</td>
-							@elseif( $packaging_shifts[$i]->shift_type != $packaging_shifts[$i-1]->shift_type )
+							@elseif( $packaging_shifts[$i]->shift_date!= $packaging_shifts[$i-1]->shift_date )
 								<td>{{ $shift->shift_type }}</td>
 								<td >{{ $shift->shift_date }}</td>
 								<td >{{ $shift->human->name }}</td>
@@ -347,32 +350,42 @@
 							
 							<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ App\Product::findorfail($shift->machine_id)->image }}"/></td>
 							
-							<td>{{ App\WipProduction::where('shift_id',$shift->id)->first()->product->name }}</td>
+							@php 
+								$wip = App\WipProduction::where('shift_id',$shift->id)->first(); 
+							@endphp 	
+							<td>{{ $wip->product->name }}</td>
 
 							
-							<td>{{ App\WipProduction::where('shift_id',$shift->id)->first()->quantity }}</td>
+							<td>{{ $wip->quantity }}</td>
 							<td>{{ $shift->operation_duration }}</td>
 							<td>{{ $shift->workers }}</td>
 							<td>{{ number_format((float)$shift->production_effeciency, 2, '.', '') }} %</td>
 							<td>
+
 								@php 
-									$scrap = App\Scraps::where('packaging_id',$shift->id)->first();
+									$scraps = App\Scraps::where('packaging_id',$shift->id)->get();
+									$scr = 0;
 								@endphp
-								{{ $scrap->amount }}
+								@if($scraps)
+									@foreach($scraps as $scrap)
+									 {{ $scrap->amount }}
+
 								<p style="padding: 10px; background-color: white;">From Shift  :
 									{{$scrap->shift->shift_type}}  وردية - يوم {{ date("Y-m-d", strtotime($scrap->shift->shift_date)) }}  -   {{$scrap->shift->human->name}}
 								</p>
+									@endforeach
+								@endif	
 							</td>
 							<td>{{ $shift->notes }}</td>
-							<td> <div style="display: inline-flex;">
+							<!--<td> <div style="display: inline-flex;">
 
-								<!-- Complete button -->
+								 Complete button
 								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="Shift Details" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
 
 
 								
 
-							</div> </td>
+							</div> </td> -->
 						</tr>
 						@php 
 						$i ++;

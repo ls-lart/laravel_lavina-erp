@@ -9,7 +9,7 @@
 	<li role="presenstation"><a href="#BOMS" aria-controls="BOMS" role="tab" data-toggle="tab"><strong>BOMs</strong></a></li>
 	<li role="presenstation"><a href="#TPMS" aria-controls="TPMS" role="tab" data-toggle="tab"><strong>TPMS & Breakdowns</strong></a></li>-->
 	<li role="presenstation" class="active"><a href="#employees" aria-controls="employees" role="tab" data-toggle="tab"><strong>Employees</strong></a></li>
-	<li role="presenstation"><a href="#PShiftReport" aria-controls="PShiftReport" role="tab" data-toggle="tab"><strong>Attendance</strong></a></li>
+	<li role="presenstation"><a href="#attendance" aria-controls="attendance" role="tab" data-toggle="tab"><strong>Attendance</strong></a></li>
 	<li role="presenstation"><a href="#Effeciency" aria-controls="Effeciency" role="tab" data-toggle="tab"><strong> Salaries & Compensations</strong></a></li>
 
 
@@ -20,7 +20,7 @@
 	</li>
 	<li  style="float: right;" >
 
-		<a class="btn btn btn-default btn-xs" style="padding: 5px 10px;" href="{{ url('/bowner/humans/create') }}">Attendance Tool</a>
+		<a class="btn btn btn-default btn-xs" style="padding: 5px 10px;" href="{{ url('/bowner/humans/attendance/tool') }}">Attendance Tool</a>
 
 	</li>
 	
@@ -45,6 +45,7 @@
 	        <th>Id</th>
 	        <th>Name</th>
 	        <th>Job Title</th>
+	        <th>Job Department</th>
 	        <th>Start Day</th>
 	        <th>Date of Birth</th>
 	        <th>Gender</th>
@@ -61,6 +62,7 @@
 				<td>{{$human->id}}</td>
 				<td><a href="{{route('bowner.humans.edit', $human->id)}}">{{$human->name}}</td>
 				<td>{{$human->job}}</td>
+				<td>{{$human->department}}</td>
 				<td>{{date("d-m-Y", strtotime($human->start_day))}}</td>
 				<td>{{date("d-m-Y", strtotime($human->birth))}}</td>
 				<td>{{$human->gender}}</td>
@@ -75,6 +77,51 @@
 	  	</table>
 	</div>
 </div>
+
+<div  role="tabpanel2" class="tab-pane fade" id="attendance">
+			<br>
+
+	<div class="table-responsive">
+		<table class="table table-hover table-bordered table-striped">
+	    <thead>
+	      <tr>
+	        <th>Id</th>
+	        <th>Name</th>
+	        <th>Title</th>
+	        <th>Department</th>
+	        <th>Date</th>
+	        <th>Attendance</th>
+	      
+	      </tr>
+	    </thead>
+	    <tbody>
+		
+		
+			@foreach($attendance as $att)
+			  <tr>
+				<td>{{$att->id}}</td>
+				<td><a href="{{route('bowner.humans.edit', $att->human->id)}}">{{$att->human->name}}</td>
+				<td>{{$att->human->job}}</td>
+				<td>{{$att->human->department}}</td>
+				<td>{{ date("Y-m-d", strtotime($att->date)) }}</td>
+				@if($att->halfday)
+					<td class="warning">Half Day</td>
+				@elseif($att->fullday)
+					<td class="success">Full Day</td>
+				@else
+					<td class="danger">Absent </td>
+				@endif	
+				
+			  </tr>
+			@endforeach
+	 
+		
+	    </tbody>
+	  	</table>
+	</div>
+</div>
+
+
 </div>
 	
 	

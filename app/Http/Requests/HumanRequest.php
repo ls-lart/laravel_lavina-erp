@@ -28,6 +28,7 @@ class HumanRequest extends FormRequest
         return [
             'name' => 'required',
             'start_day' => 'required',
+            'department'=> 'required',
             'birth' => 'required',
             'gender' => 'required',
             'address1' => 'required',

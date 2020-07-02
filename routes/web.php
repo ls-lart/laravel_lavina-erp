@@ -39,6 +39,19 @@ Route::group(['middleware'=>'bowner', 'as' => 'bowner.'], function(){
 	// Human Resource route
 	Route::resource('/bowner/humans', 'BownerHumansController');
 
+	Route::get('/bowner/humans/attendance/tool',[
+		'uses' => 'BownerHumansController@attendanceTool',
+		'as' => 'humans.attendance.tool',
+	]);
+
+	Route::post('/bowner/humans/attendance/tool/store',[
+		'uses' => 'BownerHumansController@storeAttendance',
+		'as' => 'humans.attendance.store',
+	]);
+
+	
+
+
 	// Salary route
 	Route::post('/bowner/salaries', 'BownerSalariesController@index');
 	Route::post('/bowner/salaries/store', [
@@ -110,6 +123,7 @@ Route::group(['middleware'=>'bowner', 'as' => 'bowner.'], function(){
 // Order route
 
 Route::group(['middleware'=>'auth'], function(){
+
 	Route::resource('/orders', 'OrderController', ['except'=>['destroy']]);
 	Route::get('/delete_order/{order_id}',[
 		'uses' => 'OrderController@destroy',
@@ -156,11 +170,6 @@ Route::group(['middleware'=>'auth'], function(){
 
 	]);
 
-
-	
-
-
-});
 // BusinessOwner_Manager middleware
 // Production route
 	Route::resource('bowner/production', 'ProductionController');
@@ -187,10 +196,23 @@ Route::group(['middleware'=>'auth'], function(){
 
 	]);
 	Route::get('production/shift_report/show',[
-		'uses' => 'ProductionController@showShiftReport',
+		'uses' => 'ProductionController@showReports',
 		'as' => 'production.shift.show'
 
 	]);
+
+	Route::get('production/shift_report/show/manafacturing',[
+		'uses' => 'ProductionController@showShiftReportManfacturing',
+		'as' => 'production.shift.show.manafacturing'
+
+	]);
+
+	Route::get('production/shift_report/show/packaging',[
+		'uses' => 'ProductionController@showShiftReportPackaging',
+		'as' => 'production.shift.show.packaging'
+
+	]);
+
 	Route::post('production/shift_report/store}',[
 		'uses' => 'ProductionController@storeShiftReport',
 		'as' => 'production.shift.store'
@@ -201,6 +223,13 @@ Route::group(['middleware'=>'auth'], function(){
 		'as' => 'production.shift.store.pack'
 
 	]);
+
+
+	
+
+
+});
+
 
 	
 Route::group(['middleware' => 'bowner_manager', 'as' => 'bowner.'], function() {
