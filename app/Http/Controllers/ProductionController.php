@@ -417,7 +417,9 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency =( ( ( ( ($request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / $machine->production_per_min ) * 100 )  + ( ( ( ($request->quantity_machine_1_tie_on / $request->operation_duration_machine_1_tie_on) / 60 ) / $machine->production_per_min ) * 100 ) ) / 2;
+
+         
+            $shift_log->production_effeciency =( ( ( ( ($request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / $machine->production_per_min ) * 100 )  + ( ( ( ($request->quantity_machine_1_tie_on / $request->operation_duration_machine_1_tie_on) / 60 ) / $machine->production_per_min ) * 100 ) ) / 2;
 
         $shift_log->save();
 
@@ -472,7 +474,10 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency = ( ( ($request->quantity_machine_over_shoes / $request->operation_duration_machine_over_shoes) / 60 ) / $machine->production_per_min ) * 100;
+        if($request->quantity_machine_over_shoes  > 0)
+            $shift_log->production_effeciency = ( ( ($request->quantity_machine_over_shoes / $request->operation_duration_machine_over_shoes) / 60 ) / $machine->production_per_min ) * 100;
+        else
+             $shift_log->production_effeciency = 0;
 
         $shift_log->save();
 
@@ -526,7 +531,11 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency = ( ( ($request->quantity_machine_over_head / $request->operation_duration_machine_over_head) / 60 ) / $machine->production_per_min ) * 100;
+
+        if($request->quantity_machine_over_head  > 0)
+            $shift_log->production_effeciency = ( ( ($request->quantity_machine_over_head / $request->operation_duration_machine_over_head) / 60 ) / $machine->production_per_min ) * 100;
+        else 
+            $shift_log->production_effeciency = 0;
 
         $shift_log->save();
 
@@ -578,7 +587,10 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency = ( ( ($request->quantity_machine_bracelet / $request->operation_duration_machine_bracelet) / 60 ) / $machine->production_per_min ) * 100;
+        if($request->quantity_machine_bracelet  > 0)
+            $shift_log->production_effeciency = ( ( ($request->quantity_machine_bracelet / $request->operation_duration_machine_bracelet) / 60 ) / $machine->production_per_min ) * 100;
+        else
+             $shift_log->production_effeciency = 0 ;
 
         $shift_log->save();
 

@@ -84,7 +84,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_1_ear_loop', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+            {!! Form::number('quantity_machine_1_ear_loop', null, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
@@ -155,7 +155,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_1_tie_on', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+            {!! Form::number('quantity_machine_1_tie_on', null, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
@@ -226,7 +226,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_over_shoes', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+            {!! Form::number('quantity_machine_over_shoes', null, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
@@ -292,7 +292,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_over_head', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+            {!! Form::number('quantity_machine_over_head', null, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
@@ -361,7 +361,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_bracelet', null, ['class'=>'form-control', 'min'=>1, 'required']) !!}
+            {!! Form::number('quantity_machine_bracelet', null, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
