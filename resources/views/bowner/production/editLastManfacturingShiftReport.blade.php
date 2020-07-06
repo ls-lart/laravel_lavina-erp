@@ -36,6 +36,13 @@
 						@endphp
 						@foreach ($manfacturing_shifts as $shift)
 
+						@php
+								$wip = App\WipProduction::where('shift_id',$shift->id)->first()
+						@endphp
+
+
+						@if($wip)
+
 						@if($i == 0)
 						@elseif(($manfacturing_shifts[$i]->shift_type != $manfacturing_shifts[$i-1]->shift_type) ||($manfacturing_shifts[$i]->shift_date != $manfacturing_shifts[$i-1]->shift_date) ||  ($manfacturing_shifts[$i]->human_id != $manfacturing_shifts[$i-1]->human_id))
 						<tr>
@@ -64,9 +71,7 @@
 
 							
 							
-							@php
-								$wip = App\WipProduction::where('shift_id',$shift->id)->first()
-							@endphp
+							
 
 							@if($wip)
 							<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ $wip->product->image }}"/></td>
@@ -125,6 +130,9 @@
 						@php 
 						$i ++;
 						 @endphp
+
+						 @endif
+						 
 						@endforeach
 					</tbody>
 				</table>
