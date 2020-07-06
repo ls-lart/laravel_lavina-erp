@@ -213,6 +213,7 @@ Route::group(['middleware'=>'auth'], function(){
 
 	]);
 
+
 	Route::post('production/shift_report/store}',[
 		'uses' => 'ProductionController@storeShiftReport',
 		'as' => 'production.shift.store'
@@ -224,7 +225,25 @@ Route::group(['middleware'=>'auth'], function(){
 
 	]);
 
+	Route::get('production/shift_report/delete/{shift_id}',[
+		'uses' => 'ProductionController@deleteShiftReportDetials',
+		'as' => 'production.MShift.delete'
+	]);
 
+	Route::get('production/shift_report/delete/{shift_id}',[
+		'uses' => 'ProductionController@deleteShiftReportDetials',
+		'as' => 'production.MShift.delete'
+	]);
+
+	Route::get('production/shift_report/list/manf',[
+		'uses' => 'ProductionController@listLastEntriesManfacturing',
+		'as' => 'production.list.last.manafacturing'
+	]);
+
+	Route::get('production/shift_report/list/pack',[
+		'uses' => 'ProductionController@listLastEntriesPackaging',
+		'as' => 'production.list.last.packaging'
+	]);
 	
 
 

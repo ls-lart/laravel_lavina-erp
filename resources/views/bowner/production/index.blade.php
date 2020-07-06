@@ -34,7 +34,171 @@
 	<br>
 
 	<div class="tab-content">
-		
+		<div  role="tabpanel1" class="tab-pane fade " id="workorders">
+			<br>
+			<!-- Start .table-responsive -->
+			<div class="table-responsive">
+				<table class="table table-responsive table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Order Id</th>
+							<th>Customer</th>
+							<th>Product</th>
+
+							<th>Order Qty</th>
+							<th>Inventory Qty</th>
+							<th>Material Qty</th>
+							<th>Status</th>
+							<th>Date</th>
+							<th>Actions</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($orders as $order)
+						@php 
+						$i = 0; // count items in an order 
+						$orderFilled[$order->id] = 1;
+						@endphp
+						@foreach ($order->orderdetail()->get() as $detail)
+						@if($detail->product->quantity < $detail->quantity)
+						<tr>
+							<td >{{ $order->id }}</td>
+							<td >{{ $order->customer->name }}</td>
+
+							<td>{{ $detail->product->name }}</td>
+
+							<td>{{ $detail->quantity  * $detail->product->unit->equi }}</td>
+							<td>{{ $products[$detail->product_id] }} (x <i>{{ $detail->product->unit->equi }}</i>)</td>
+
+
+							@php
+
+							$bom = App\Bom::where('product_id',$detail->product_id)->latest('updated_at')->first();
+							$bom_materials = App\BomMaterial::where('bom_id',$bom->id)->get();
+
+							@endphp 	
+
+							<td>
+								@foreach($bom_materials as $bom_material)
+
+								<p style="    background: white;
+								padding: 10px;
+								border-radius: 5px;">
+								{{$bom_material->material->name}}  
+
+
+
+								<span style="float: right;">{{$bom_material->material->unit->name}}</span>
+								<span style="float: right;margin-right: 5px;">
+									{{$bom_material->quantity/2000 * $detail->quantity  * $detail->product->unit->equi   }}
+								</span>
+
+							</p>
+
+							@endforeach
+						</td>
+						<td><i>{{ $detail->product->extra }}<i></td>
+
+							<td>{{ date("d-m-Y", strtotime($order->delivery_at)) }}</td>
+							<td></td>
+							@php 
+							$i++;
+							@endphp
+
+						</tr>
+						@php 
+						$products[$detail->product_id] -= $detail->quantity 
+						@endphp
+						@endif
+						@endforeach
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- / .table-responsive -->
+		</div>
+
+
+
+		<div  role="tabpanel2" class="tab-pane fade" id="BOMS">
+			<!-- Start .table-responsive -->
+			<div class="table-responsive">
+				<table class="table table-responsive table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Bom Id</th>
+							<th>Name</th>
+							<th>Product</th>
+							<th>Created At</th>
+							<th>Actions</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($boms as $bom)
+
+						<tr>
+
+							<td>{{ $bom->id }}</td>
+							<td>{{ $bom->name }}</td>
+							<td>{{ $bom->product->name }}</td>
+							<td>{{ date("d-m-Y", strtotime($bom->created_at)) }}</td>
+							<td><div style="display: inline-flex;">
+
+								<!-- Complete button -->
+								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
+
+							</div></td>
+
+						</tr>
+
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- / .table-responsive -->
+		</div>
+
+		<div  role="tabpanel3" class="tab-pane fade" id="TPMS">
+			<!-- Start .table-responsive -->
+			<div class="table-responsive">
+				<table class="table table-responsive table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Machine Name</th>
+							<th>Machine Segment</th>
+							<th>TPM / Breakdown</th>
+							<th>Notes</th>
+							<th>Date</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($boms as $bom)
+
+						<tr>
+
+							<td>{{ $bom->id }}</td>
+							<td>{{ $bom->name }}</td>
+							<td>{{ $bom->product->name }}</td>
+							<td>{{ date("d-m-Y", strtotime($bom->created_at)) }}</td>
+							<td><div style="display: inline-flex;">
+
+								<!-- Complete button -->
+								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="complete purchase" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
+
+							</div></td>
+
+						</tr>
+
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- / .table-responsive -->
+		</div>
+
 		<div  role="tabpanel4" class="tab-pane fade in active" id="MShiftReport">
 			<!-- Start .table-responsive -->
 			<div class="table-responsive">
@@ -46,18 +210,17 @@
 							<th>Shift Date</th>
 							<th>Shift Leader</th>
 							<th>Machine</th>
-							
-							<th>Operation Duration</th>
 							<th>Product Image</th>
 							<th>Product</th>
 							<th>Production</th>
+							<th>Operation Duration</th>
 							<th>Operators</th>
 							<th>Production Effeciency</th>
 							<th>Total Breakdown Duration (Min)</th>
 							<th>Packaged</th>
 							<th>Scrap</th>
 							<th>Notes</th>
-							
+							<th>Actions</th>
 
 						</tr>
 					</thead>
@@ -67,14 +230,22 @@
 						@endphp
 						@foreach ($manfacturing_shifts as $shift)
 
+						@if($i == 0)
+						@elseif(($manfacturing_shifts[$i]->shift_type != $manfacturing_shifts[$i-1]->shift_type) ||($manfacturing_shifts[$i]->shift_date != $manfacturing_shifts[$i-1]->shift_date) ||  ($manfacturing_shifts[$i]->human_id != $manfacturing_shifts[$i-1]->human_id))
+						<tr>
+							<td></td>
+						</tr>
+						@else
+						@endif
 						<tr>
 							@if($i == 0)
 								<td>{{ $shift->shift_type }}</td>
-								<td >{{ $shift->shift_date }}</td>
+								<td style="width: 100px;">{{ date("Y-m-d", strtotime($shift->shift_date)) }}</td>
 								<td >{{ $shift->human->name }}</td>
-							@elseif( $manfacturing_shifts[$i]->shift_type != $manfacturing_shifts[$i-1]->shift_type )
+
+							@elseif(($manfacturing_shifts[$i]->shift_type != $manfacturing_shifts[$i-1]->shift_type) ||($manfacturing_shifts[$i]->shift_date != $manfacturing_shifts[$i-1]->shift_date) ||  ($manfacturing_shifts[$i]->human_id != $manfacturing_shifts[$i-1]->human_id))
 								<td>{{ $shift->shift_type }}</td>
-								<td >{{ $shift->shift_date }}</td>
+								<td style="width: 100px;">{{ date("Y-m-d", strtotime($shift->shift_date)) }}</td>
 								<td >{{ $shift->human->name }}</td>
 							@else
 								<td></td>
@@ -82,10 +253,13 @@
 								<td></td>
 							@endif
 
+
+							
+
 							
 							<td>{{ App\Machines::findorfail($shift->machine_id)->name }}</td>
 							
-							<td>{{ $shift->operation_duration }}</td>
+							
 							@php
 								$wip = App\WipProduction::where('shift_id',$shift->id)->first()
 							@endphp
@@ -102,7 +276,9 @@
 							<td></td>
 							<td></td>
 							@endif
+							<td>{{ $shift->operation_duration }}</td>
 							<td>{{ $shift->workers }}</td>
+
 							<td>{{ number_format((float)$shift->production_effeciency, 2, '.', '') }} %</td>
 							<td>{{ $shift->total_breakdown_duration }}</td>
 							@if($wip)
@@ -123,6 +299,34 @@
 									
 							<td>{{$scr}}</td>
 							<td>{{ $shift->notes }}</td>
+
+							@if($i == 0)
+							<td> <div style="display: inline-flex;">
+
+								
+								<a class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="right" title="Delete Shift Details" href="{{route('production.MShift.delete',$shift->id)}}"><span class="glyphicon glyphicon-trash"></span></a>
+
+
+								
+
+							</div> </td>
+							@elseif(($manfacturing_shifts[$i]->shift_type != $manfacturing_shifts[$i-1]->shift_type) ||($manfacturing_shifts[$i]->shift_date != $manfacturing_shifts[$i-1]->shift_date) ||  ($manfacturing_shifts[$i]->human_id != $manfacturing_shifts[$i-1]->human_id))
+								<td> <div style="display: inline-flex;">
+
+								
+								<a class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="right" title="Delete Shift Details" href="{{route('production.MShift.delete',$shift->id)}}"><span class="glyphicon glyphicon-trash"></span></a>
+
+
+								
+
+							</div> </td>
+							@else
+								<td></td>
+								
+							@endif
+
+
+							
 							
 						</tr>
 						@php 
@@ -163,22 +367,30 @@
 						$i = 0 ;
 						@endphp
 						@foreach ($packaging_shifts as $shift)
-
+						@if($i == 0)
+						@elseif( $packaging_shifts[$i]->shift_date!= $packaging_shifts[$i-1]->shift_date )
 						<tr>
+							<td></td>
+						</tr>
+						@else
+						@endif
+						<tr>
+
+								
+
 							@if($i == 0)
 								<td>{{ $shift->shift_type }}</td>
-								<td >{{ $shift->shift_date }}</td>
+								<td style="width: 100px;">{{ date("Y-m-d", strtotime($shift->shift_date)) }}</td>
 								<td >{{ $shift->human->name }}</td>
 							@elseif( $packaging_shifts[$i]->shift_date!= $packaging_shifts[$i-1]->shift_date )
 								<td>{{ $shift->shift_type }}</td>
-								<td >{{ $shift->shift_date }}</td>
+								<td style="width: 100px;">{{ date("Y-m-d", strtotime($shift->shift_date)) }}</td>
 								<td >{{ $shift->human->name }}</td>
 							@else
 								<td></td>
 								<td></td>
 								<td></td>
 							@endif
-
 							
 							
 							
@@ -206,9 +418,7 @@
 									@foreach($scraps as $scrap)
 									 {{ $scrap->amount }}
 
-								<p style="padding: 10px; background-color: white;">From Shift  :
-									{{$scrap->shift->shift_type}}  وردية - يوم {{ date("Y-m-d", strtotime($scrap->shift->shift_date)) }}  -   {{$scrap->shift->human->name}}
-								</p>
+								
 									@endforeach
 								@endif	
 							</td>

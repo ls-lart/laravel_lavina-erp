@@ -37,8 +37,8 @@ class ProductionController extends Controller
         }
 
         $boms =  Bom::all();
-        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->get();
-        $packaging_shifts = ShiftLog::where('manfacturing',0)->get();
+        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
+        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
 
     	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts'));
     }
@@ -178,14 +178,14 @@ class ProductionController extends Controller
 
     public function storeShiftReportPackaging(Request $request){
 
-        Log::info($request);
+        //Log::info($request);
 
 
         // loop throught the shift 
 
         foreach ($request->shift as $key => $value) {
 
-            Log::info($key);
+          //  Log::info($key);
 
             // now save the shift info 
        // if($request->quantity[$key] > 0){}
@@ -398,9 +398,9 @@ class ProductionController extends Controller
         $shift_log->notes = $request->other_notesـbreakdowns_machine_1;
         $shift_log->save();
 
-        $wip->shift_id = $shift_log->id;
-        if($wip->quantity > 0)
-          $wip->save();
+       // $wip->shift_id = $shift_log->id;
+       // if($wip->quantity > 0)
+       //   $wip->save();
 
         $duration_sum = 0;
         foreach ($request->duration_machine_1 as $key => $value) {
@@ -419,13 +419,20 @@ class ProductionController extends Controller
         $shift_log->total_breakdown_duration = $duration_sum ;
 
          
-            $shift_log->production_effeciency =( ( ( ( ($request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / $machine->production_per_min ) * 100 )  + ( ( ( ($request->quantity_machine_1_tie_on / $request->operation_duration_machine_1_tie_on) / 60 ) / $machine->production_per_min ) * 100 ) ) / 2;
+            $shift_log->production_effeciency =( ( ( ( (
+
+                $request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / ($machine->production_per_min/2) ) * 100 ) 
+
+                 + ( ( ( ($request->quantity_machine_1_tie_on / 
+
+                    $request->operation_duration_machine_1_tie_on) / 60
+                     ) / ($machine->production_per_min/2) ) * 100 ) ) / 2;
 
         $shift_log->save();
 
         // $wip->shift_id = $shift_log->id;
-        if($wip->quantity > 0)
-          $wip->save();
+        //if($wip->quantity > 0)
+        //  $wip->save();
 
 
 
@@ -603,6 +610,39 @@ class ProductionController extends Controller
 
         return redirect('/production/shift_report/show');
 
+    }
+
+    public function deleteShiftReportDetials($shift_id){
+
+
+        // get shift type , date and the shift leader 
+
+        $shift = ShiftLog::findOrFail($shift_id);
+        $shifts = ShiftLog::where('shift_date',$shift->shift_date)->where('shift_type',$shift->shift_type)->where('human_id',$shift->human_id)->get();
+
+        foreach ($shifts as $key => $value) {
+            $wip = WipProduction::where('shift_id',$value->id)->delete();
+            $shift_log_details = ShiftLogDetails::where('log_id',$value->id)->delete();
+            $value->delete();
+        }
+       
+
+
+
+        return redirect()->back();
+    }
+
+    public function listLastEntriesManfacturing(){
+        
+        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
+        return view('bowner.production.editLastManfacturingShiftReport', compact('manfacturing_shifts'));
+
+    }
+
+    public function listLastEntriesPackaging(){
+
+        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
+        return view('bowner.production.editLastManfacturingShiftReport', compact('packaging_shifts'));
     }
 
     public static function returnCode($number){

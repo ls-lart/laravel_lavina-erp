@@ -413,7 +413,7 @@
          </div>
       </div>
    </div>
-   {!! Form::open(['method'=>'POST', 'action'=>'ProductionController@storeShiftReportPackaging', 'class'=>'form-group']) !!}
+  
    <div class="row">
       <div class="form-group col-sm-12" style="margin-top: 1rem;">
          {!! Form::submit('Submit / حفظ', ['class'=>'btn btn-primary']) !!}
