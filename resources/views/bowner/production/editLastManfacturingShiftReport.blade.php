@@ -127,12 +127,14 @@
 							
 							
 						</tr>
+						@endif
+						
 						@php 
 						$i ++;
 						 @endphp
 
-						 @endif
 						 
+
 						@endforeach
 					</tbody>
 				</table>
