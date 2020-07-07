@@ -35,7 +35,7 @@
 
 	<div class="tab-content">
 		
-		
+
 		<div  role="tabpanel4" class="tab-pane fade in active" id="MShiftReport">
 			<!-- Start .table-responsive -->
 			<div class="table-responsive">
@@ -262,10 +262,7 @@
 							<td>{{ $shift->notes }}</td>
 							<!--<td> <div style="display: inline-flex;">
 
-								 Complete button
-								<a class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="right" title="Shift Details" href="{{route('production.bom.details',$bom->id)}}"><span class="glyphicon glyphicon-list"></span></a>
-
-
+							
 								
 
 							</div> </td> -->
