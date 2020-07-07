@@ -35,6 +35,7 @@
 
 	<div class="tab-content">
 		
+		
 		<div  role="tabpanel4" class="tab-pane fade in active" id="MShiftReport">
 			<!-- Start .table-responsive -->
 			<div class="table-responsive">
