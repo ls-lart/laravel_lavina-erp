@@ -17,6 +17,7 @@
       <div class="form-group col-sm-4">
          {!! Form::label('shift', 'Shift / وردية') !!}
          <select name="shift_type" id="shift_type" class="form-control" required>
+             <option value="" >إختار</option>
             <option value="morning" >Morning / صباحية</option>
             <option value="night" >Night / مسائية</option>
          </select>
@@ -89,6 +90,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
             <select name="product_color_machine_1_ear_loop" id="product_color_machine_1_ear_loop" class="form-control" required>
+               <option value="" >إختار</option>
                <option value="blue" >Blue / أزرق</option>
                <option value="green" >Green / أخضر</option>
                <option value="pink" >Pink / زهري</option>
@@ -98,6 +100,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('type', 'Product Type / نوع المنتج') !!}
             <select name="product_type_machine_1_ear_loop" id="product_type_machine_1_ear_loop" class="form-control" required>
+                <option value="" >إختار</option>
                <option value="Ultra" >Ultra / الترا</option>
                <option value="Extra" >Extra / اكسترا</option>
                <option value="Protect" >Protect / بروتكت</option>
@@ -160,6 +163,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
             <select name="product_color_machine_1_tie_on" id='product_color_machine_1_tie_on' class="form-control" required>
+               <option value="" >إختار</option>
                <option value="blue" >Blue / أزرق</option>
                <option value="green" >Green / أخضر</option>
                <option value="pink" >Pink / زهري</option>
@@ -169,6 +173,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('type', 'Product Type / نوع المنتج') !!}
             <select name="product_type_machine_1_tie_on" id='product_type_machine_1_tie_on' class="form-control" required>
+               <option value="" >إختار</option>
                <option value="Ultra" >Ultra / الترا</option>
                <option value="Extra" >Extra / اكسترا</option>
                <option value="Protect" >Protect / بروتكت</option>
@@ -231,6 +236,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
             <select name="product_color_machine_over_shoes" id='product_color_machine_over_shoes' class="form-control" required>
+
                <option value="blue" >Blue / أزرق</option>
             </select>
          </div>
@@ -297,6 +303,7 @@
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
             <select name="product_color_machine_over_head" id='product_color_machine_over_head' class="form-control" required>
+                <option value="" >إختار</option>
                <option value="blue" >Blue / أزرق</option>
                <option value="pink" >Pink / زهري</option>
                <option value="white" >White / أبيض</option>
@@ -361,7 +368,7 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('quantity', 'Production Quantity / الكمية') !!}
-            {!! Form::number('quantity_machine_bracelet', null, ['class'=>'form-control',  'required']) !!}
+            {!! Form::number('quantity_machine_bracelet', 0, ['class'=>'form-control',  'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('color', 'Product Color / لون المنتج') !!}
@@ -379,11 +386,11 @@
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
-            {!! Form::number('operation_duration_machine_bracelet', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('operation_duration_machine_bracelet', 0, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('Operators Number', 'Operators Number / عدد العاملين') !!}
-            {!! Form::number('operators_machine_bracelet', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('operators_machine_bracelet', 0, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
          </div>
       </div>
       <div class="form-group col-sm-12" style="margin-top: 1.5rem;margin-bottom: 2rem;">

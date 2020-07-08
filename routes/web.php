@@ -225,14 +225,14 @@ Route::group(['middleware'=>'auth'], function(){
 
 	]);
 
-	Route::get('production/shift_report/delete/{shift_id}',[
+	Route::get('production/shift_report/delete/pck/{shift_id}',[
 		'uses' => 'ProductionController@deleteShiftReportDetials',
 		'as' => 'production.MShift.delete'
 	]);
 
-	Route::get('production/shift_report/delete/{shift_id}',[
+	Route::get('production/shift_report/delete/mnf/{shift_id}',[
 		'uses' => 'ProductionController@deleteShiftReportDetials',
-		'as' => 'production.MShift.delete'
+		'as' => 'production.PShift.delete'
 	]);
 
 	Route::get('production/shift_report/list/manf',[

@@ -21,7 +21,7 @@
 		<br>
 		<div class="row">
 			<div class="col-12 " style="border-radius: 5px;text-align: left;margin-bottom: 0.5rem;padding: 1rem;">
-				<a href="{{route('production.list.last.manafacturing')}}" style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  href="">مدخلات الورديات  <span style="margin-left: 10px;"  class="glyphicon glyphicon-list"></span></a>
+				<a href="{{route('production.list.last.manafacturing')}}" style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات  <span style="margin-left: 10px;"  class="glyphicon glyphicon-list"></span></a>
 			</div>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 		<br>
 		<div class="row">
 			<div class="col-12 " style="border-radius: 5px;text-align: left;margin-bottom: 0.5rem;padding: 1rem;">
-				<a href=""  style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  href="">مدخلات الورديات  <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
+				<a href="{{route('production.list.last.packaging')}}"  style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات  <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
 			</div>
 		</div>
 	</div>

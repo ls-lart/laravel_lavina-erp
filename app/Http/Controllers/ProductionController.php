@@ -624,12 +624,33 @@ class ProductionController extends Controller
             $wip = WipProduction::where('shift_id',$value->id)->delete();
             $shift_log_details = ShiftLogDetails::where('log_id',$value->id)->delete();
             $value->delete();
+
+
+            // delete the bom 
+            // delete 
         }
        
 
 
+        return redirect()->back();
+    }
+
+    public function deleteShiftReportPckDetials($shift_id){
+
+         $shift = ShiftLog::findOrFail($shift_id);
+        $shifts = ShiftLog::where('shift_date',$shift->shift_date)->where('shift_type',$shift->shift_type)->where('human_id',$shift->human_id)->get();
+
+        foreach ($shifts as $key => $value) {
+            $wip = WipProduction::where('shift_id',$value->id)->delete();
+            $shift_log_details = ShiftLogDetails::where('log_id',$value->id)->delete();
+            $value->delete();
+
+            // delete the packaged from the production 
+            // delete the scrap 
+        }
 
         return redirect()->back();
+
     }
 
     public function listLastEntriesManfacturing(){
@@ -642,7 +663,7 @@ class ProductionController extends Controller
     public function listLastEntriesPackaging(){
 
         $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
-        return view('bowner.production.editLastManfacturingShiftReport', compact('packaging_shifts'));
+        return view('bowner.production.editLastPackagingShiftReport', compact('packaging_shifts'));
     }
 
     public static function returnCode($number){
