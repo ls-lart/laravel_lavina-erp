@@ -172,8 +172,9 @@ class ProductionController extends Controller
         foreach ($wips as $key => $value) {
              Log::info(intval($value->packaged) + intval($value->scraps));
              Log::info(intval($value->quantity));
-            if( (intval($value->packaged) + intval($value->scraps)) >= intval($value->quantity))
+            if( (intval($value->packaged) + intval($value->scraps)) >= intval($value->quantity)){
                 array_push($array, $value);
+            }
 
         }
 
