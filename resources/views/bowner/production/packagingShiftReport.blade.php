@@ -44,7 +44,7 @@
    @php $i = 0; @endphp
    @foreach($array as $wip)
 
-   if( $wip->quantity <= ($wip->packaged + $wip->scraps )  )
+   @if( $wip->quantity <= ($wip->packaged + $wip->scraps )  )
    <div class="row" style="    background-color: #f7f7f7;
       margin-top: 2rem;
       border: 1px dashed #d3d3d373;
