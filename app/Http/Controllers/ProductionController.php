@@ -165,10 +165,16 @@ class ProductionController extends Controller
 
     public function showShiftReportPackaging(){
 
+        $array = array();
         $leaders = Human::where('job','مشرف وردية')->get();
         $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
+        
+        foreach ($wips as $key => $value) {
+            if($value->packaged >= $value->quantity)
+                array_push($array, $value);
+        }
 
-        return view('bowner.production.packagingShiftReport', compact('leaders','wips'));
+        return view('bowner.production.packagingShiftReport', compact('leaders','array'));
     }
 
     public function showShiftReport(){
