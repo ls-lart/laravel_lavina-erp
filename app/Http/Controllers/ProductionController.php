@@ -170,8 +170,11 @@ class ProductionController extends Controller
         $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
         
         foreach ($wips as $key => $value) {
-            if( (intval($value->packaged) +intval($value->scraps)) >= intval($value->quantity))
+             Log::info(intval($value->packaged) + intval($value->scraps));
+             Log::info(intval($value->quantity));
+            if( (intval($value->packaged) + intval($value->scraps)) >= intval($value->quantity))
                 array_push($array, $value);
+
         }
 
 
