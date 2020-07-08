@@ -170,11 +170,11 @@ class ProductionController extends Controller
         $wips = WipProduction::where('quantity','>',0)->where('packaging',0)->get();
         
         foreach ($wips as $key => $value) {
-            if($value->packaged >= $value->quantity)
+            if(($value->packaged + $value->scraps) >= $value->quantity)
                 array_push($array, $value);
         }
 
-       
+
         return view('bowner.production.packagingShiftReport', compact('leaders','array'));
     }
 
