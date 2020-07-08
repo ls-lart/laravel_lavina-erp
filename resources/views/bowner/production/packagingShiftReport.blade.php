@@ -42,7 +42,7 @@
       <hr>
    </div>
    @php $i = 0; @endphp
-   @foreach($wips as $wip)
+   @foreach($array as $wip)
    <div class="row" style="    background-color: #f7f7f7;
       margin-top: 2rem;
       border: 1px dashed #d3d3d373;

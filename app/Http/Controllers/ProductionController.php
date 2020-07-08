@@ -174,6 +174,7 @@ class ProductionController extends Controller
                 array_push($array, $value);
         }
 
+       
         return view('bowner.production.packagingShiftReport', compact('leaders','array'));
     }
 
