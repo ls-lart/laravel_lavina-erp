@@ -38,7 +38,7 @@ class ProductionController extends Controller
 
         $boms =  Bom::all();
         $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
-        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
+        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->paginate(10);
 
     	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts'));
     }
