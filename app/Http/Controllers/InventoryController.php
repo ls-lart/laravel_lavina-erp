@@ -34,7 +34,7 @@ class InventoryController extends Controller
         // select orders first 
 
         $orders     = Order::where('submit','=',1)->where('deliver','=',1)->where('status','=',0)->get();
-        $logs = StockLog::all();
+        $logs = StockLog::orderBy('created_at','DESC')->get();
         
         // 'purchases'
         return view('bowner.inventories.index', compact('products', 'materials','purchases','logs','orders'));
