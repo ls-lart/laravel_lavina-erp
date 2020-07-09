@@ -358,6 +358,11 @@
             </tbody>
          </table>
       </div>
+      <div class="row">
+            <div class="text-center">
+               {{ $manfacturing_shifts->render() }}
+         </div>
+         </div>
       <!-- /.table-responsive -->
       <!-- / View Purchasing Material -->
    </div>

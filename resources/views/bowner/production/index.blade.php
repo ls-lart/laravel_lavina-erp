@@ -172,6 +172,11 @@
 						@endforeach
 					</tbody>
 				</table>
+				
+				<div class="row">
+				<div class="text-center">
+					{{ $manfacturing_shifts->render() }}
+			</div>
 			</div>
 			<!-- / .table-responsive -->
 		</div>

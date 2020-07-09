@@ -29,7 +29,7 @@ class ProductionController extends Controller
 {
     public function index()
     {
-    	$orders = Order::where('deliver', 0)->where('submit', 1)->paginate(10);
+    	$orders = Order::where('deliver', 0)->where('submit', 1)->get();
         $products = Product::pluck('quantity','id');
         $flag;
         foreach ($products as $key => $value) {
@@ -38,7 +38,7 @@ class ProductionController extends Controller
 
         $boms =  Bom::all();
         $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
-        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->paginate(10);
+        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
 
     	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts'));
     }
