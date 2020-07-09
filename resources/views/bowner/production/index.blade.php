@@ -172,12 +172,8 @@
 						@endforeach
 					</tbody>
 				</table>
+
 				
-				<div class="row">
-				<div class="text-center">
-					{{ $manfacturing_shifts->render() }}
-			</div>
-			</div>
 			<!-- / .table-responsive -->
 		</div>
 
@@ -278,12 +274,8 @@
 						@endforeach
 					</tbody>
 				</table>
-				<!-- Pagination -->
-			<div class="row">
-				<div class="text-center">
-					{{ $packaging_shifts->render() }}
-			</div>
-	</div>
+				
+			
 			</div>
 			<!-- / .table-responsive -->
 		</div>
