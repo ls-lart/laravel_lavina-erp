@@ -276,7 +276,7 @@
 				<!-- Pagination -->
 			<div class="row">
 				<div class="text-center">
-					{{ $orders->packaging_shifts() }}
+					{{ $packaging_shifts->render() }}
 			</div>
 	</div>
 			</div>
