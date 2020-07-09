@@ -273,6 +273,12 @@
 						@endforeach
 					</tbody>
 				</table>
+				<!-- Pagination -->
+			<div class="row">
+				<div class="text-center">
+					{{ $orders->packaging_shifts() }}
+			</div>
+	</div>
 			</div>
 			<!-- / .table-responsive -->
 		</div>
@@ -293,12 +299,7 @@
 
 
 	</div>
-	<!-- Pagination -->
-	<div class="row">
-		<div class="text-center">
-			{{ $orders->render() }}
-		</div>
-	</div>
+	
 
 	@stop
 
