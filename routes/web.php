@@ -226,7 +226,7 @@ Route::group(['middleware'=>'auth'], function(){
 	]);
 
 	Route::get('production/shift_report/delete/pck/{shift_id}',[
-		'uses' => 'ProductionController@deleteShiftReportDetials',
+		'uses' => 'ProductionController@deleteShiftReportPckDetials',
 		'as' => 'production.MShift.delete'
 	]);
 

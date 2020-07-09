@@ -58,9 +58,16 @@
                                     <li><a href="{{ route('bowner.leaves.index') }}">Leave</a></li>
                                 </ul>-->
                             </li> 
+
                             @endif 
 
+                            @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'inv_manager')
                             
+                            <li><a href="{{ route('bowner.inventories.index') }} "><i class="fa fa-cubes" ></i>Inventory</a>
+                                
+                            </li>
+
+                             @endif 
 
                             <li class="" style="    float: right;
     margin-right: 2%;
