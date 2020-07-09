@@ -175,6 +175,7 @@
 
 				
 			<!-- / .table-responsive -->
+			</div>
 		</div>
 
 		<div  role="tabpanel5" class="tab-pane fade " id="PShiftReport">
