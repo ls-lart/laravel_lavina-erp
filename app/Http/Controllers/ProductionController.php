@@ -52,7 +52,7 @@ class ProductionController extends Controller
                     $i++; 
                 //}
         }
-
+        $manfacturingDaily = array_reverse($manfacturingDaily,true);
         $manfacturingDaily = json_encode($manfacturingDaily);
 
     	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts','manfacturingDaily'));
