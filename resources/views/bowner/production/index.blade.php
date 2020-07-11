@@ -330,38 +330,59 @@
 
 <script>
 
-//console.log({!! $manfacturingDaily !!});
+console.log({!! $manfacturingDaily !!});
 
+am4core.ready(function() {
+
+// Themes begin
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_dataviz);
+// Themes end
 
 // Create chart instance
 var chart = am4core.create("chartdiv", am4charts.XYChart);
 
+// Enable chart cursor
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.lineX.disabled = true;
+chart.cursor.lineY.disabled = true;
+
+// Enable scrollbar
+chart.scrollbarX = new am4core.Scrollbar();
+
 // Add data
- chart.data = {!! $manfacturingDaily !!};
-
-
-console.log(chart.data);
+chart.data = {!! $manfacturingDaily !!};
 
 // Create axes
-var categoryAxis = chart.xAxes.push(new am4charts.DateAxis());
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.renderer.minGridDistance = 30;
-categoryAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd a";
-categoryAxis.tooltipDateFormat = "MMM dd, yyyy a";
-categoryAxis.dateFormats.setKey("day", "dd");
-
-
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis.renderer.grid.template.location = 0.5;
+dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd a";
+dateAxis.renderer.minGridDistance = 40;
+dateAxis.tooltipDateFormat = "MMM dd, yyyy a";
+dateAxis.dateFormats.setKey("day", "dd");
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 // Create series
 var series = chart.series.push(new am4charts.ColumnSeries());
+series.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
 series.dataFields.valueY = "Ear Loop Machine 1";
 series.dataFields.dateX = "date";
-series.name = "Revenue"
-series.tooltipText = "{dateX}: [b]{valueY}[/]";
+series.strokeDasharray = 3;
+series.strokeWidth = 2
+series.strokeOpacity = 0.3;
+series.strokeDasharray = "3,3";
+series.name = "Ear Loop Machine 1";
+
+var bullet = series.bullets.push(new am4charts.CircleBullet());
+bullet.strokeWidth = 2;
+bullet.stroke = am4core.color("#fff");
+bullet.setStateOnChildren = true;
+bullet.propertyFields.fillOpacity = "opacity";
+bullet.propertyFields.strokeOpacity = "opacity";
+
+var hoverState = bullet.states.create("hover");
+hoverState.properties.scale = 1.7;
 
 var regseries = chart.series.push(new am4charts.LineSeries());
 regseries.dataFields.valueY = "Ear Loop Machine 1";
@@ -370,10 +391,26 @@ regseries.strokeWidth = 2;
 regseries.name = "Linear Regression";
 
 regseries.plugins.push(new am4plugins_regression.Regression());
-
-
+regseries.method = "linear";
+//regseries.simplify = true;
 
 chart.legend = new am4charts.Legend();
+//chart.cursor = new am4charts.XYCursor();
+
+/*
+var lastTrend = createTrendLine([
+  { "date": "2012-01-17", "value": 16 },
+  { "date": "2012-01-22", "value": 10 }
+]);
+
+// Initial zoom once chart is ready
+lastTrend.events.once("datavalidated", function(){
+  series.xAxis.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
+});
+*/
+}); // end am4core.ready()
+
+
 
 
 </script>
