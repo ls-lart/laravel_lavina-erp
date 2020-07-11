@@ -333,7 +333,13 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency = ( ( ($request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / $machine->production_per_min ) * 100;
+        if($request->quantity_machine_1_ear_loop  > 0)
+            $shift_log->production_effeciency = ( ( ($request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / $machine->production_per_min ) * 100;
+        else
+             $shift_log->production_effeciency = 0;
+
+         
+        
 
         $shift_log->save();
 
@@ -385,8 +391,13 @@ class ProductionController extends Controller
         }
 
         $shift_log->total_breakdown_duration = $duration_sum ;
-        $shift_log->production_effeciency = ( ( ($request->quantity_machine_1_tie_on / $request->operation_duration_machine_1_tie_on) / 60 ) / $machine->production_per_min ) * 100;
 
+         if($request->quantity_machine_1_tie_on  > 0)
+            $shift_log->production_effeciency = ( ( ($request->quantity_machine_1_tie_on / $request->operation_duration_machine_1_tie_on) / 60 ) / $machine->production_per_min ) * 100;
+        else
+             $shift_log->production_effeciency = 0;
+
+      
         $shift_log->save();
 
         $wip->shift_id = $shift_log->id;
@@ -429,7 +440,7 @@ class ProductionController extends Controller
 
         $shift_log->total_breakdown_duration = $duration_sum ;
 
-         
+        if($request->quantity_machine_1_tie_on  > 0 && $request->quantity_machine_1_ear_loop > 0){
             $shift_log->production_effeciency =( ( ( ( (
 
                 $request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / ($machine->production_per_min/2) ) * 100 ) 
@@ -438,6 +449,31 @@ class ProductionController extends Controller
 
                     $request->operation_duration_machine_1_tie_on) / 60
                      ) / ($machine->production_per_min/2) ) * 100 ) ) / 2;
+        }
+        else if($request->quantity_machine_1_tie_on  > 0 && $request->quantity_machine_1_ear_loop == 0){
+
+            $shift_log->production_effeciency =( 0
+
+                 + ( ( ( ($request->quantity_machine_1_tie_on / 
+
+                    $request->operation_duration_machine_1_tie_on) / 60
+                     ) / ($machine->production_per_min/2) ) * 100 ) ) / 2;
+
+
+        }
+        else if($request->quantity_machine_1_tie_on  == 0 && $request->quantity_machine_1_ear_loop > 0){
+
+            $shift_log->production_effeciency =( ( ( ( (
+
+                $request->quantity_machine_1_ear_loop / $request->operation_duration_machine_1_ear_loop) / 60 ) / ($machine->production_per_min/2) ) * 100 ) 
+
+                 + 0 ) / 2;
+        }    
+        else
+             $shift_log->production_effeciency = 0 ;
+
+         
+            
 
         $shift_log->save();
 

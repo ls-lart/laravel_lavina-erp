@@ -293,6 +293,14 @@
 					<!-- dashboard for the effeciency of cost effeciency  -->
 
 			<!-- / .table-responsive -->
+
+			<div class="row">
+				<div class="col-md-12">
+					<h1 class="text-center serial">Daily Revenue</h1>
+					<div id="chartdiv" style="width:auto; height:400px; margin:10px auto;"></div>
+				</div>
+			</div>
+
 		</div>
 
 

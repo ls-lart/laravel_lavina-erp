@@ -163,7 +163,7 @@ class ChartController extends Controller
         $i = 0;
         $j = 0;
 
-        foreach($purchases as $purchase) {
+        /*foreach($purchases as $purchase) {
             if ($i == 0) {
                 $purchaseMonthly[$i]['purchase'] = $purchase->quantity * $purchase->material->cost;
                 $purchaseMonthly[$i]['date'] = date("Y-m", strtotime($purchase->updated_at));
@@ -178,7 +178,7 @@ class ChartController extends Controller
                     $i++;
                   }
               }
-        }
+        }*/
         // MERGE DATA
         // Add this month to $orderMonthly if not exist
         $thisMonth = date("Y-m");
