@@ -47,13 +47,15 @@ class ProductionController extends Controller
         foreach ($manfacturing_shifts as $key => $shift) {
             // Get Daily Data
                // if ($i == 0) {
-                    $manfacturingDaily[$i][$shift->machine->name] = number_format((float)$shift->production_effeciency, 2, '.', '');
+                   
                     if($shift->shift_type == 'morning'){
+                         $manfacturingDaily[$i][$shift->machine->name] = number_format((float)$shift->production_effeciency, 2, '.', '');
                         $date = new \DateTime($shift->shift_date);
                         $date->setTime(7,0);
                         $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
                     }
                     else if($shift->shift_type == 'night'){ 
+                         $manfacturingDaily[$i][$shift->machine->name] = number_format((float)$shift->production_effeciency, 2, '.', '');
                         $date = new \DateTime($shift->shift_date);
                         $date->setTime(19,0);
                         $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
