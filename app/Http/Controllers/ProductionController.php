@@ -40,7 +40,22 @@ class ProductionController extends Controller
         $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
         $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
 
-    	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts'));
+        $manfacturingDaily = [];
+        $orderMonthly = [];
+        $orderYearly = [];
+        $i = 0;
+        foreach ($manfacturing_shifts as $key => $shift) {
+            // Get Daily Data
+               // if ($i == 0) {
+                    $manfacturingDaily[$i][$shift->machine->name] = number_format((float)$shift->production_effeciency, 2, '.', '');
+                    $manfacturingDaily[$i]['date'] = date('Y-m-d', strtotime($shift->shift_date));
+                    $i++; 
+                //}
+        }
+
+        $manfacturingDaily = json_encode($manfacturingDaily);
+
+    	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts','manfacturingDaily'));
     }
 
     public function show($id)
@@ -338,7 +353,7 @@ class ProductionController extends Controller
         else
              $shift_log->production_effeciency = 0;
 
-         
+
         
 
         $shift_log->save();

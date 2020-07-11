@@ -310,7 +310,207 @@
 	@stop
 
 	@section('scripts')
-	<script>
-	</script>
-	@stop
+<script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="//www.amcharts.com/lib/3/serial.js"></script>
+<script src="//www.amcharts.com/lib/3/pie.js"></script>
+<script src="//www.amcharts.com/lib/3/plugins/animate/animate.min.js"></script>
+<script src="//www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+<script>
+
+// --- Income by All Products ---
+var chartData = {!! $manfacturingDaily !!};
+
+console.log(chartData);
+
+/*
+function getYearlyData( monthly ) {
+  var yearly = [];
+  for ( var i = 0; i < monthly.length; i++ ) {
+    var dp = monthly[ i ],
+      next = monthly[ i + 1 ];
+    if ( next === undefined || dp.month.split('-')[0] != next.month.split('-')[0] )
+      yearly.push( dp );
+  }
+  return yearly;
+}
+*/
+
+/**
+ * Sets proper data set
+ */
+function setData( type ) {
+ //if (type == "daily") {
+  	chart.dataProvider = chartData;
+  	$('h1.serial').text('Daily Revenue');
+  //}
+
+ 
+
+  chart.validateData();
+}
+
+var chart = AmCharts.makeChart("chartdiv", {
+	"type": "serial",
+	"dataDateFormat": "YYYY-MM-DD",
+  	"dataProvider": chartData,
+  	/*
+  	// For ajax function
+  	"dataLoader": {
+	  	"url": "data/dailyByProduct.php",
+	    //"format": "json",
+	    "showErrors": true,
+	    "noStyles": true,
+	    "async": true,
+	    "load": function( options, chart ) {
+        // Here the data is already loaded and set to the chart.
+        // We can iterate through it and add proper graphs
+        for ( var key in chart.dataProvider[0] ) {
+        	if ( chart.dataProvider[0].hasOwnProperty( key ) && key != chart.categoryField ) {
+        		var graph = new AmCharts.AmGraph();
+        		graph.valueField = key;
+        		graph.type = "column";
+        		graph.fillAlphas = 0.8;
+        		graph.title = key,
+            	//graph.lineThickness = 2;
+            	chart.addGraph(graph);
+	        }
+	    }
+		}
+	},
+	*/
+	"rotate": false,
+	"marginTop": 10,
+	"marginRight": 20,
+    "marginLeft": 20,
+    "marginBottom": 10,
+	"categoryField": "date",
+	"categoryAxis": {
+		//"parseDates": true,
+		"gridAlpha": 0.07,
+		"axisColor": "#DADADA",
+		"axisAlpha": 0.5,
+		"labelRotation": 45,
+		"startOnAxis": false,
+		"title": "Date",
+		//"inside": true,
+		"gridPosition": "start",
+		//"autoGridCount": true,
+		//"tickLength": 0,
+		/*
+		"guides": [{
+			"category": "2016-06-05",
+			"lineColor": "#CC0000",
+			"lineAlpha": 1,
+			"dashLength": 2,
+			"inside": true,
+			"labelRotation": 90,
+			"label": "holiday"
+		}, {
+			"category": "2016-07-05",
+			"lineColor": "#CC0000",
+			"lineAlpha": 1,
+			"dashLength": 2,
+			"inside": true,
+			"labelRotation": 90,
+			"label": "holiday"
+		}]
+		*/
+	},
+	"valueAxes": [{
+		"stackType": "regular",
+		//"stackType": "100%",
+		//"axisColor": "#DADADA",
+		"axisAlpha": 0.5,
+		"gridAlpha": 0.07,
+		//"axisAlpha": 0,
+		"title": "($)",
+        //"labelsEnabled": false,
+        //"position": "left"
+	}],
+	"startDuration": 0.5,
+	"graphs": [{
+		"valueField": "Ear Loop Machine 1",
+		"type": "column",
+		"fillAlphas": 0.8,
+		//"lineAlpha": 0.2,
+		//"fontSize": 11,
+		//"bulletSize": 14,
+		//"customBullet": "https://www.amcharts.com/lib/3/images/star.png?x",
+        //"customBulletField": "customBullet",
+		"title": "Ear Loop Machine 1",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	},{
+		"valueField": "Tie on Machine 1",
+		"type": "column",
+		"fillAlphas": 0.8,
+		"title": "Tie on Machine 1",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	}, {
+		"valueField": "Face Mask Machine 1",
+		"type": "column",
+		"fillAlphas": 0.8,
+		"title": "Face Mask Machine 1",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	}, {
+		"valueField": "salary",
+		"type": "column",
+		"newStack": true,
+		"fillAlphas": 0.8,
+		"title": "salary",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	}, {
+		"valueField": "purchase",
+		"type": "column",
+		"newStack": true,
+		"fillAlphas": 0.8,
+		"title": "purchase",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	},{
+		"valueField": "profit",
+		"type": "column",
+		"newStack": true,
+		"fillAlphas": 0.8,
+		"title": "profit",
+		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
+	}],
+	"legend": {
+		"position": "bottom",
+		"valueText": "$[[value]]",
+		"valueWidth": 150,
+		"valueAlign": "left",
+		"equalWidths": true,
+		"periodValueText": ", total: $[[value.sum]]",
+		//"autoMargins": false,
+        "borderAlpha": 0.2,
+        "horizontalGap": 10,
+        //"markerSize": 10,
+        //"useGraphSettings": true,
+	},
+	"chartCursor": {
+		"cursorAlpha": 0,
+		//"graphBulletSize": 1.5,
+     	//"zoomable":false,
+      	//"valueZoomable":true,
+        //"valueLineEnabled":true,
+        //"valueLineBalloonEnabled":true,
+        //"valueLineAlpha":0.2
+	},
+	"chartScrollbar": {
+		"color": "FFFFFF"
+	},
+	/*
+	"valueScrollbar":{
+      "offset":30
+    },
+    */
+	"export": {
+    	"enabled": false,
+     }
+});
+
+
+</script>
+@stop
 

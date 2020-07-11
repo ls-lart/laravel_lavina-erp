@@ -10,4 +10,8 @@ class ShiftLog extends Model
     {
     	return $this->belongsTo('App\Human');
     }
+    public function machine()
+    {
+    	return $this->belongsTo('App\Machines');
+    }
 }
