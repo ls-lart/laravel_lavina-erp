@@ -54,7 +54,7 @@ class ProductionController extends Controller
                         $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
                     }
                     else if($shift->shift_type == 'night'){ 
-                        $date = new DateTime($shift->shift_date);
+                        $date = new \DateTime($shift->shift_date);
                         $date->setTime(19,0);
                         $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
                      }
