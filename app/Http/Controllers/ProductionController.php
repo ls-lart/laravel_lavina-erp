@@ -199,7 +199,7 @@ class ProductionController extends Controller
           //  Log::info($key);
 
             // now save the shift info 
-       // if($request->quantity[$key] > 0){}
+        if($request->quantity[$key] > 0){
 
             $shift_log = new ShiftLog();
             $shift_log->manfacturing = 0;
@@ -275,7 +275,7 @@ class ProductionController extends Controller
                 $stock->save();
             }
             
-
+        }
         }
 
          return redirect('/production/shift_report/show');

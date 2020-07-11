@@ -101,19 +101,19 @@
          {{ Form::hidden('shift[]', $shift[$i] ) }}
          <div class="form-group col-sm-2" >
             {!! Form::label('quantity', 'Production Quantity / الكمية المعبأة') !!}
-            {!! Form::number('quantity[]', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('quantity[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
-            {!! Form::number('duration[]', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('duration[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
          </div>
          <div class="form-group col-sm-2">
             {!! Form::label('operators number', 'Operators Number / عدد العاملين') !!}
-            {!! Form::number('operators[]', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('operators[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
          </div>
          <div class="form-group col-sm-1">
             {!! Form::label('scrap', 'Scrap / الهالك بالقطعه') !!}
-            {!! Form::number('scrap[]', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
+            {!! Form::number('scrap[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
          </div>
       </div>
       <!--<div class="form-group col-sm-3">

@@ -37,8 +37,11 @@
                                 
                                 </li>
                                   
-                            
-                           
+                             @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'hr_manager')
+                           <li><a href="{{ route('bowner.chart.index') }}"><i class="fa fa-bar-chart"></i> Dashboard </a>
+                                
+                            </li> 
+                            @endif
                             
                             
                              @if(Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
@@ -56,7 +59,7 @@
                             </li>
 
                              @endif 
-                             
+
                             @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'hr_manager')
                             <li><a href="{{ route('bowner.humans.index') }}"><i class="fa fa-users"></i> Human Resource </a>
                                 <!--<ul class="nav child_menu">
