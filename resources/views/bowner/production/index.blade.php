@@ -353,9 +353,9 @@ chart.data = {!! $manfacturingDaily !!};
 // Create axes
 var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 dateAxis.renderer.grid.template.location = 0.5;
-dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd a";
 dateAxis.renderer.minGridDistance = 40;
-dateAxis.tooltipDateFormat = "MMM dd, yyyy";
+dateAxis.tooltipDateFormat = "MMM dd, yyyy a";
 dateAxis.dateFormats.setKey("day", "dd");
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
