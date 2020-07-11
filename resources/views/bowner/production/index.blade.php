@@ -325,7 +325,7 @@
 <script src="https://www.amcharts.com/lib/4/geodata/germanyLow.js"></script>
 <script src="https://www.amcharts.com/lib/4/fonts/notosans-sc.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
+<script src="//www.amcharts.com/lib/4/plugins/regression.js"></script>
 <script>
 
 console.log({!! $manfacturingDaily !!});
@@ -380,27 +380,13 @@ bullet.propertyFields.strokeOpacity = "opacity";
 var hoverState = bullet.states.create("hover");
 hoverState.properties.scale = 1.7;
 
-function createTrendLine(data) {
-  var trend = chart.series.push(new am4charts.LineSeries());
-  trend.dataFields.valueY = "Ear Loop Machine 1";
-  trend.dataFields.dateX = "date";
-  trend.strokeWidth = 2
-  trend.stroke = trend.fill = am4core.color("#c00");
-  trend.data = data;
+var regseries = chart.series.push(new am4charts.LineSeries());
+regseries.dataFields.valueY = "Ear Loop Machine 1";
+regseries.dataFields.dateX = "date";
+regseries.strokeWidth = 2;
+regseries.name = "Linear Regression";
 
-  var bullet = trend.bullets.push(new am4charts.CircleBullet());
-  bullet.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
-  bullet.strokeWidth = 2;
-  bullet.stroke = am4core.color("#fff")
-  bullet.circle.fill = trend.stroke;
-
-  var hoverState = bullet.states.create("hover");
-  hoverState.properties.scale = 1.7;
-
-  return trend;
-};
-
-createTrendLine({!! $manfacturingDaily !!});
+regseries.plugins.push(new am4plugins_regression.Regression());
 /*
 var lastTrend = createTrendLine([
   { "date": "2012-01-17", "value": 16 },
