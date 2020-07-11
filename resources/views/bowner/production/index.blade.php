@@ -405,7 +405,7 @@ console.log({!! $manfacturingDaily !!});
 
 createSeries('Ear Loop Machine 1', 'The Thirst');
 createSeries('Tie on Machine 1', 'The Second');
-createSeries('Face Mask Machine 1', 'The Third');
+//createSeries('Face Mask Machine 1', 'The Third');
 
 function arrangeColumns() {
 
