@@ -320,12 +320,13 @@
 
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/regression.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
 <script src="https://www.amcharts.com/lib/4/lang/de_DE.js"></script>
 <script src="https://www.amcharts.com/lib/4/geodata/germanyLow.js"></script>
 <script src="https://www.amcharts.com/lib/4/fonts/notosans-sc.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-<script src="//www.amcharts.com/lib/4/plugins/regression.js"></script>
+
 <script>
 
 console.log({!! $manfacturingDaily !!});
@@ -334,6 +335,7 @@ am4core.ready(function() {
 
 // Themes begin
 am4core.useTheme(am4themes_animated);
+//am4core.useTheme(am4themes_dataviz);
 // Themes end
 
 // Create chart instance
@@ -368,7 +370,8 @@ series.dataFields.dateX = "date";
 series.strokeDasharray = 3;
 series.strokeWidth = 2
 series.strokeOpacity = 0.3;
-series.strokeDasharray = "3,3"
+series.strokeDasharray = "3,3";
+series.name = "Ear Loop Machine 1";
 
 var bullet = series.bullets.push(new am4charts.CircleBullet());
 bullet.strokeWidth = 2;
@@ -387,6 +390,12 @@ regseries.strokeWidth = 2;
 regseries.name = "Linear Regression";
 
 regseries.plugins.push(new am4plugins_regression.Regression());
+regseries.simplify = true;
+
+chart.legend = new am4charts.Legend();
+//chart.cursor = new am4charts.XYCursor();
+
+
 /*
 var lastTrend = createTrendLine([
   { "date": "2012-01-17", "value": 16 },
