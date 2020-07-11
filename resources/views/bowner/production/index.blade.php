@@ -359,7 +359,7 @@ dateAxis.dateFormats.setKey("day", "dd");
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 // Create series
-var series = chart.series.push(new am4charts.LineSeries());
+var series = chart.series.push(new am4charts.ColumnSeries());
 series.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
 series.dataFields.valueY = "Ear Loop Machine 1";
 series.dataFields.dateX = "date";
