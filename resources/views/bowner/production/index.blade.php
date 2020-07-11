@@ -398,11 +398,8 @@ function createTrendLine(data) {
   return trend;
 };
 
-createTrendLine([
-  { "date": "2012-01-02", "value": 10 },
-  { "date": "2012-01-11", "value": 19 }
-]);
-
+createTrendLine({!! $manfacturingDaily !!});
+/*
 var lastTrend = createTrendLine([
   { "date": "2012-01-17", "value": 16 },
   { "date": "2012-01-22", "value": 10 }
@@ -412,7 +409,7 @@ var lastTrend = createTrendLine([
 lastTrend.events.once("datavalidated", function(){
   series.xAxis.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
 });
-
+*/
 }); // end am4core.ready()
 
 
