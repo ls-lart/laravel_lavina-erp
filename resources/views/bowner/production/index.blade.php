@@ -334,119 +334,86 @@ am4core.ready(function() {
 am4core.useTheme(am4themes_animated);
 // Themes end
 
+// Create chart instance
+var chart = am4core.create("chartdiv", am4charts.XYChart);
 
+// Enable chart cursor
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.lineX.disabled = true;
+chart.cursor.lineY.disabled = true;
 
+// Enable scrollbar
+chart.scrollbarX = new am4core.Scrollbar();
 
-var chart = am4core.create('chartdiv', am4charts.XYChart)
-chart.colors.step = 2;
-
-chart.legend = new am4charts.Legend()
-chart.legend.position = 'top'
-chart.legend.paddingBottom = 20
-chart.legend.labels.template.maxWidth = 95
-
-var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-xAxis.dataFields.category = 'date'
-xAxis.renderer.cellStartLocation = 0.1
-xAxis.renderer.cellEndLocation = 0.9
-xAxis.renderer.grid.template.location = 0;
-
-var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-yAxis.min = 0;
-
-function createSeries(value, name) {
-    var series = chart.series.push(new am4charts.ColumnSeries())
-    series.dataFields.valueY = value
-    series.dataFields.categoryX = 'date'
-    series.name = name
-
-    series.events.on("hidden", arrangeColumns);
-    series.events.on("shown", arrangeColumns);
-
-    var bullet = series.bullets.push(new am4charts.LabelBullet())
-    bullet.interactionsEnabled = true
-    bullet.dy = 30;
-    bullet.label.text = '{valueY}'
-    bullet.label.fill = am4core.color('#ffffff')
-
-    return series;
-}
-
+// Add data
 chart.data = {!! $manfacturingDaily !!};
-/* [
-    {
-        category: 'Place #1',
-        first: 40,
-        second: 55,
-        third: 60
-    },
-    {
-        category: 'Place #2',
-        first: 30,
-        second: 78,
-        third: 69
-    },
-    {
-        category: 'Place #3',
-        first: 27,
-        second: 40,
-        third: 45
-    },
-    {
-        category: 'Place #4',
-        first: 50,
-        second: 33,
-        third: 22
-    }
-]
-*/
 
-console.log({!! $manfacturingDaily !!});
+// Create axes
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis.renderer.grid.template.location = 0.5;
+dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+dateAxis.renderer.minGridDistance = 40;
+dateAxis.tooltipDateFormat = "MMM dd, yyyy";
+dateAxis.dateFormats.setKey("day", "dd");
 
-createSeries('Ear Loop Machine 1', 'The Thirst');
-createSeries('Tie on Machine 1', 'The Second');
-//createSeries('Face Mask Machine 1', 'The Third');
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-function arrangeColumns() {
+// Create series
+var series = chart.series.push(new am4charts.LineSeries());
+series.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
+series.dataFields.valueY = "Ear Loop Machine 1";
+series.dataFields.dateX = "date";
+series.strokeDasharray = 3;
+series.strokeWidth = 2
+series.strokeOpacity = 0.3;
+series.strokeDasharray = "3,3"
 
-    var series = chart.series.getIndex(0);
+var bullet = series.bullets.push(new am4charts.CircleBullet());
+bullet.strokeWidth = 2;
+bullet.stroke = am4core.color("#fff");
+bullet.setStateOnChildren = true;
+bullet.propertyFields.fillOpacity = "opacity";
+bullet.propertyFields.strokeOpacity = "opacity";
 
-    var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-    if (series.dataItems.length > 1) {
-        var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-        var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-        var delta = ((x1 - x0) / chart.series.length) * w;
-        if (am4core.isNumber(delta)) {
-            var middle = chart.series.length / 2;
+var hoverState = bullet.states.create("hover");
+hoverState.properties.scale = 1.7;
 
-            var newIndex = 0;
-            chart.series.each(function(series) {
-                if (!series.isHidden && !series.isHiding) {
-                    series.dummyData = newIndex;
-                    newIndex++;
-                }
-                else {
-                    series.dummyData = chart.series.indexOf(series);
-                }
-            })
-            var visibleCount = newIndex;
-            var newMiddle = visibleCount / 2;
+function createTrendLine(data) {
+  var trend = chart.series.push(new am4charts.LineSeries());
+  trend.dataFields.valueY = "Ear Loop Machine 1";
+  trend.dataFields.dateX = "date";
+  trend.strokeWidth = 2
+  trend.stroke = trend.fill = am4core.color("#c00");
+  trend.data = data;
 
-            chart.series.each(function(series) {
-                var trueIndex = chart.series.indexOf(series);
-                var newIndex = series.dummyData;
+  var bullet = trend.bullets.push(new am4charts.CircleBullet());
+  bullet.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
+  bullet.strokeWidth = 2;
+  bullet.stroke = am4core.color("#fff")
+  bullet.circle.fill = trend.stroke;
 
-                var dx = (newIndex - trueIndex + middle - newMiddle) * delta
+  var hoverState = bullet.states.create("hover");
+  hoverState.properties.scale = 1.7;
 
-                series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-            })
-        }
-    }
-}
+  return trend;
+};
+
+createTrendLine([
+  { "date": "2012-01-02", "value": 10 },
+  { "date": "2012-01-11", "value": 19 }
+]);
+
+var lastTrend = createTrendLine([
+  { "date": "2012-01-17", "value": 16 },
+  { "date": "2012-01-22", "value": 10 }
+]);
+
+// Initial zoom once chart is ready
+lastTrend.events.once("datavalidated", function(){
+  series.xAxis.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
+});
 
 }); // end am4core.ready()
-
 
 
 
