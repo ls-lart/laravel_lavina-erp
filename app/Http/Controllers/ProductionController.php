@@ -37,7 +37,7 @@ class ProductionController extends Controller
         }
 
         $boms =  Bom::all();
-        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->get();
+        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->orderBy('shift_type','DESC')->get();
         $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
 
         $manfacturingDaily = [];
