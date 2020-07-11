@@ -310,206 +310,147 @@
 	@stop
 
 	@section('scripts')
-<script src="//www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="//www.amcharts.com/lib/3/serial.js"></script>
-<script src="//www.amcharts.com/lib/3/pie.js"></script>
-<script src="//www.amcharts.com/lib/3/plugins/animate/animate.min.js"></script>
-<script src="//www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<script src="//www.amcharts.com/lib/3/themes/light.js"></script>
-<script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+<!--<script src="//www.amcharts.com/lib/4/amcharts.js"></script>
+<script src="//www.amcharts.com/lib/4/serial.js"></script>
+<script src="//www.amcharts.com/lib/4/pie.js"></script>
+<script src="//www.amcharts.com/lib/4/plugins/animate/animate.min.js"></script>
+<script src="//www.amcharts.com/lib/4/plugins/export/export.min.js"></script>
+<script src="//www.amcharts.com/lib/4/themes/light.js"></script>
+<script src="//www.amcharts.com/lib/4/plugins/dataloader/dataloader.min.js"></script>-->
+
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/lang/de_DE.js"></script>
+<script src="https://www.amcharts.com/lib/4/geodata/germanyLow.js"></script>
+<script src="https://www.amcharts.com/lib/4/fonts/notosans-sc.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
 <script>
 
-// --- Income by All Products ---
-var chartData = {!! $manfacturingDaily !!};
+am4core.ready(function() {
 
-console.log(chartData);
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
 
-/*
-function getYearlyData( monthly ) {
-  var yearly = [];
-  for ( var i = 0; i < monthly.length; i++ ) {
-    var dp = monthly[ i ],
-      next = monthly[ i + 1 ];
-    if ( next === undefined || dp.month.split('-')[0] != next.month.split('-')[0] )
-      yearly.push( dp );
-  }
-  return yearly;
+
+
+
+var chart = am4core.create('chartdiv', am4charts.XYChart)
+chart.colors.step = 2;
+
+chart.legend = new am4charts.Legend()
+chart.legend.position = 'top'
+chart.legend.paddingBottom = 20
+chart.legend.labels.template.maxWidth = 95
+
+var xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+xAxis.dataFields.category = 'date'
+xAxis.renderer.cellStartLocation = 0.1
+xAxis.renderer.cellEndLocation = 0.9
+xAxis.renderer.grid.template.location = 0;
+
+var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+yAxis.min = 0;
+
+function createSeries(value, name) {
+    var series = chart.series.push(new am4charts.ColumnSeries())
+    series.dataFields.valueY = value
+    series.dataFields.categoryX = 'date'
+    series.name = name
+
+    series.events.on("hidden", arrangeColumns);
+    series.events.on("shown", arrangeColumns);
+
+    var bullet = series.bullets.push(new am4charts.LabelBullet())
+    bullet.interactionsEnabled = false
+    bullet.dy = 30;
+    bullet.label.text = '{valueY}'
+    bullet.label.fill = am4core.color('#ffffff')
+
+    return series;
 }
+
+chart.data = {!! $manfacturingDaily !!};
+/* [
+    {
+        category: 'Place #1',
+        first: 40,
+        second: 55,
+        third: 60
+    },
+    {
+        category: 'Place #2',
+        first: 30,
+        second: 78,
+        third: 69
+    },
+    {
+        category: 'Place #3',
+        first: 27,
+        second: 40,
+        third: 45
+    },
+    {
+        category: 'Place #4',
+        first: 50,
+        second: 33,
+        third: 22
+    }
+]
 */
 
-/**
- * Sets proper data set
- */
-function setData( type ) {
- //if (type == "daily") {
-  	chart.dataProvider = chartData;
-  	$('h1.serial').text('Daily Revenue');
-  //}
+console.log({!! $manfacturingDaily !!});
 
- 
+createSeries('Ear Loop Machine 1', 'The Thirst');
+createSeries('Tie on Machine 1', 'The Second');
+createSeries('Face Mask Machine 1', 'The Third');
 
-  chart.validateData();
+function arrangeColumns() {
+
+    var series = chart.series.getIndex(0);
+
+    var w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
+    if (series.dataItems.length > 1) {
+        var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+        var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+        var delta = ((x1 - x0) / chart.series.length) * w;
+        if (am4core.isNumber(delta)) {
+            var middle = chart.series.length / 2;
+
+            var newIndex = 0;
+            chart.series.each(function(series) {
+                if (!series.isHidden && !series.isHiding) {
+                    series.dummyData = newIndex;
+                    newIndex++;
+                }
+                else {
+                    series.dummyData = chart.series.indexOf(series);
+                }
+            })
+            var visibleCount = newIndex;
+            var newMiddle = visibleCount / 2;
+
+            chart.series.each(function(series) {
+                var trueIndex = chart.series.indexOf(series);
+                var newIndex = series.dummyData;
+
+                var dx = (newIndex - trueIndex + middle - newMiddle) * delta
+
+                series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+                series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+            })
+        }
+    }
 }
 
-var chart = AmCharts.makeChart("chartdiv", {
-	"type": "serial",
-	"dataDateFormat": "YYYY-MM-DD",
-  	"dataProvider": chartData,
-  	/*
-  	// For ajax function
-  	"dataLoader": {
-	  	"url": "data/dailyByProduct.php",
-	    //"format": "json",
-	    "showErrors": true,
-	    "noStyles": true,
-	    "async": true,
-	    "load": function( options, chart ) {
-        // Here the data is already loaded and set to the chart.
-        // We can iterate through it and add proper graphs
-        for ( var key in chart.dataProvider[0] ) {
-        	if ( chart.dataProvider[0].hasOwnProperty( key ) && key != chart.categoryField ) {
-        		var graph = new AmCharts.AmGraph();
-        		graph.valueField = key;
-        		graph.type = "column";
-        		graph.fillAlphas = 0.8;
-        		graph.title = key,
-            	//graph.lineThickness = 2;
-            	chart.addGraph(graph);
-	        }
-	    }
-		}
-	},
-	*/
-	"rotate": false,
-	"marginTop": 10,
-	"marginRight": 20,
-    "marginLeft": 20,
-    "marginBottom": 10,
-	"categoryField": "date",
-	"categoryAxis": {
-		//"parseDates": true,
-		"gridAlpha": 0.07,
-		"axisColor": "#DADADA",
-		"axisAlpha": 0.5,
-		"labelRotation": 45,
-		"startOnAxis": false,
-		"title": "Date",
-		//"inside": true,
-		"gridPosition": "start",
-		//"autoGridCount": true,
-		//"tickLength": 0,
-		/*
-		"guides": [{
-			"category": "2016-06-05",
-			"lineColor": "#CC0000",
-			"lineAlpha": 1,
-			"dashLength": 2,
-			"inside": true,
-			"labelRotation": 90,
-			"label": "holiday"
-		}, {
-			"category": "2016-07-05",
-			"lineColor": "#CC0000",
-			"lineAlpha": 1,
-			"dashLength": 2,
-			"inside": true,
-			"labelRotation": 90,
-			"label": "holiday"
-		}]
-		*/
-	},
-	"valueAxes": [{
-		"stackType": "regular",
-		//"stackType": "100%",
-		//"axisColor": "#DADADA",
-		"axisAlpha": 0.5,
-		"gridAlpha": 0.07,
-		//"axisAlpha": 0,
-		"title": "($)",
-        //"labelsEnabled": false,
-        //"position": "left"
-	}],
-	"startDuration": 0.5,
-	"graphs": [{
-		"valueField": "Ear Loop Machine 1",
-		"type": "column",
-		"fillAlphas": 0.8,
-		//"lineAlpha": 0.2,
-		//"fontSize": 11,
-		//"bulletSize": 14,
-		//"customBullet": "https://www.amcharts.com/lib/3/images/star.png?x",
-        //"customBulletField": "customBullet",
-		"title": "Ear Loop Machine 1",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	},{
-		"valueField": "Tie on Machine 1",
-		"type": "column",
-		"fillAlphas": 0.8,
-		"title": "Tie on Machine 1",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	}, {
-		"valueField": "Face Mask Machine 1",
-		"type": "column",
-		"fillAlphas": 0.8,
-		"title": "Face Mask Machine 1",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	}, {
-		"valueField": "salary",
-		"type": "column",
-		"newStack": true,
-		"fillAlphas": 0.8,
-		"title": "salary",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	}, {
-		"valueField": "purchase",
-		"type": "column",
-		"newStack": true,
-		"fillAlphas": 0.8,
-		"title": "purchase",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	},{
-		"valueField": "profit",
-		"type": "column",
-		"newStack": true,
-		"fillAlphas": 0.8,
-		"title": "profit",
-		"balloonText": "[[title]]: $<span style='font-size:12px'><b>[[value]]</b></span>",
-	}],
-	"legend": {
-		"position": "bottom",
-		"valueText": "$[[value]]",
-		"valueWidth": 150,
-		"valueAlign": "left",
-		"equalWidths": true,
-		"periodValueText": ", total: $[[value.sum]]",
-		//"autoMargins": false,
-        "borderAlpha": 0.2,
-        "horizontalGap": 10,
-        //"markerSize": 10,
-        //"useGraphSettings": true,
-	},
-	"chartCursor": {
-		"cursorAlpha": 0,
-		//"graphBulletSize": 1.5,
-     	//"zoomable":false,
-      	//"valueZoomable":true,
-        //"valueLineEnabled":true,
-        //"valueLineBalloonEnabled":true,
-        //"valueLineAlpha":0.2
-	},
-	"chartScrollbar": {
-		"color": "FFFFFF"
-	},
-	/*
-	"valueScrollbar":{
-      "offset":30
-    },
-    */
-	"export": {
-    	"enabled": false,
-     }
-});
+}); // end am4core.ready()
 
+
+
+
+	
 
 </script>
 @stop
