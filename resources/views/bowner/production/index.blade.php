@@ -328,6 +328,8 @@
 
 <script>
 
+console.log({!! $manfacturingDaily !!});
+
 am4core.ready(function() {
 
 // Themes begin

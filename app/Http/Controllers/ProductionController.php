@@ -48,7 +48,18 @@ class ProductionController extends Controller
             // Get Daily Data
                // if ($i == 0) {
                     $manfacturingDaily[$i][$shift->machine->name] = number_format((float)$shift->production_effeciency, 2, '.', '');
-                    $manfacturingDaily[$i]['date'] = date('Y-m-d', strtotime($shift->shift_date));
+                    if($shift->shift_type == 'morning'){
+                        $date = new \DateTime($shift->shift_date);
+                        $date->setTime(7,0);
+                        $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
+                    }
+                    else if($shift->shift_type == 'night'){ 
+                        $date = new DateTime($shift->shift_date);
+                        $date->setTime(19,0);
+                        $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
+                     }
+                    else{}   
+
                     $i++; 
                 //}
         }
