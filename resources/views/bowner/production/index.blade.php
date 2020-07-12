@@ -206,7 +206,8 @@
 					<div class="row">
 						
 						<div class="col-md-8">
-							<h4 class="text-left"><img src="https://images-na.ssl-images-amazon.com/images/I/21nmHIKhnGL._AC_.jpg" style="width: 50px;margin-right: 10px;">Face Mask Machine 1 - Overall</h4>
+							<h4 class="text-left"><img src="https://images-na.ssl-images-amazon.com/images/I/21nmHIKhnGL._AC_.jpg" style="width: 50px;margin-right: 10px;">Face Mask Machine 1 - Overall <small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',1)->first()->production_per_min}} Unit/Min</small></h4>
+
 							<div id="chartdiv" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
 						<div class="col-md-4" style="padding-top: 5rem;">
@@ -234,7 +235,7 @@
 
 
 						<div class="col-md-8">
-							<h4 class="text-left"><img src="https://images-na.ssl-images-amazon.com/images/I/31YjLpUEmDL.jpg" style="width: 50px;margin-right: 10px;"> Ear Loop Mask Machine 1 - Overall</h4>
+							<h4 class="text-left"><img src="https://images-na.ssl-images-amazon.com/images/I/31YjLpUEmDL.jpg" style="width: 50px;margin-right: 10px;"> Ear Loop Mask Machine 1 - Overall<small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',5)->first()->production_per_min}} Unit/Min</small></h4>
 							<div id="chartdiv_earloop" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
 						<div class="col-md-4" style="padding-top: 5rem;">
@@ -262,7 +263,7 @@
 
 
 						<div class="col-md-8">
-							<h4 class="text-left"><img src="https://cdn.ecommercedns.uk/files/9/230279/6/8038996/tie-on-face-mask_medium.png" style="width: 50px;margin-right: 10px;"> Tie On Mask Machine 1 - Overall</h4>
+							<h4 class="text-left"><img src="https://cdn.ecommercedns.uk/files/9/230279/6/8038996/tie-on-face-mask_medium.png" style="width: 50px;margin-right: 10px;"> Tie On Mask Machine 1 - Overall<small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',6)->first()->production_per_min}} Unit/Min</small></h4>
 							<div id="chartdiv_tieon" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
 						<div class="col-md-4" style="padding-top: 5rem;">
@@ -298,7 +299,7 @@
 						<div class="col-md-8">
 							
 						
-							<h4 class="text-left" style=""><img src="https://ae01.alicdn.com/kf/H87367f107b7d493aa21cc870dc83ef64n.jpg" style="width: 50px;margin-right: 10px;"> OverShoes Machine - Overall</h4>
+							<h4 class="text-left" style=""><img src="https://ae01.alicdn.com/kf/H87367f107b7d493aa21cc870dc83ef64n.jpg" style="width: 50px;margin-right: 10px;"> OverShoes Machine - Overall<small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',2)->first()->production_per_min}} Unit/Min</small></h4>
 
 							<div id="chartdiv_overshoes" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
@@ -334,7 +335,7 @@
 						<div class="col-md-8">
 							
 						
-							<h4 class="text-left" style=""><img src="https://cpimg.tistatic.com/04121042/s/4/Disposable-Bouffant-Cap.jpg" style="width: 50px;margin-right: 10px;"> OverHead Machine - Overall</h4>
+							<h4 class="text-left" style=""><img src="https://cpimg.tistatic.com/04121042/s/4/Disposable-Bouffant-Cap.jpg" style="width: 50px;margin-right: 10px;"> OverHead Machine - Overall<small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',3)->first()->production_per_min}} Unit/Min</small></h4>
 
 							<div id="chartdiv_overhead" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
@@ -371,7 +372,7 @@
 						<div class="col-md-8">
 							
 						
-							<h4 class="text-left" style=""><img src="https://5.imimg.com/data5/OM/BW/MY-14078910/patient-identification-band-2c-child-28pack-of-100-pcs-29-500x500.jpg" style="width: 50px;margin-right: 10px;">ID Bracelet Machine - Overall</h4>
+							<h4 class="text-left" style=""><img src="https://5.imimg.com/data5/OM/BW/MY-14078910/patient-identification-band-2c-child-28pack-of-100-pcs-29-500x500.jpg" style="width: 50px;margin-right: 10px;">ID Bracelet Machine - Overall<small style="float: right;margin-top: 2rem;"> {{App\Machines::where('id',4)->first()->production_per_min}} Unit/Min</small></h4>
 
 							<div id="chartdiv_bracelet" style="width:auto; height:400px; margin:10px auto;"></div>
 						</div>
