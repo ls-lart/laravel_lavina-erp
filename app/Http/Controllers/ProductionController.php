@@ -36,6 +36,18 @@ class ProductionController extends Controller
             $flag[$key] = 0;
         }
 
+        $adjs = ShiftLog::where('machine_id',2)->where('manfacturing',1)->get();
+        foreach ($adjs as $key => $value) {
+            $value->production_effeciency = $value->production_effeciency *90 / 50;
+            $value->save();
+        }
+
+        $adjs = ShiftLog::where('machine_id',3)->where('manfacturing',1)->get();
+        foreach ($adjs as $key => $value) {
+            $value->production_effeciency = $value->production_effeciency *90 / 50;
+            $value->save();
+        }
+
         $boms =  Bom::all();
         $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->orderBy('shift_type','DESC')->get();
         //$wips = WipProduction::where('packaging',1)->get();
