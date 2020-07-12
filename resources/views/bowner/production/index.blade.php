@@ -252,7 +252,7 @@
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Scraps</h5>
-								<h4>{{ number_format($scraps_earloop, 0, '.', ',') }}</h4>
+								<h4>{{ number_format($scraps_earloop, 0, '.', ',') }} - {{number_format($scraps_earloop / $productionUnits_earloop * 100 , 0, '.', ',')}} %</h4>
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Total Breakdown</h5>
@@ -280,7 +280,7 @@
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Scraps</h5>
-								<h4>{{ number_format($scraps_tieon, 0, '.', ',') }}</h4>
+								<h4>{{ number_format($scraps_tieon, 0, '.', ',') }} - {{number_format($scraps_tieon / $productionUnits_tieon * 100 , 0, '.', ',')}} %</h4>
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Total Breakdown</h5>
@@ -317,7 +317,7 @@
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Scraps</h5>
-								<h4>{{ number_format($scraps_overshoes, 0, '.', ',') }}</h4>
+								<h4>{{ number_format($scraps_overshoes, 0, '.', ',') }} - {{number_format($scraps_overshoes / $productionUnits_overshoes * 100 , 0, '.', ',')}} %</h4>
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Total Breakdown</h5>
@@ -353,7 +353,7 @@
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Scraps</h5>
-								<h4>{{ number_format($scraps_overhead, 0, '.', ',') }}</h4>
+								<h4>{{ number_format($scraps_overhead, 0, '.', ',') }} - {{number_format($scraps_overhead / $productionUnits_overhead * 100 , 0, '.', ',')}} %</h4>
 							</div>
 							<div class="col-md-6 text-center" style="margin-top: 2rem;">
 								<h5>Total Breakdown</h5>
