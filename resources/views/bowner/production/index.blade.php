@@ -189,7 +189,8 @@
 			$unpackaged_overshoes = $productionUnits_overshoes - $unpackaged_overshoes - $scraps_overshoes;
 
 			$effeciency_overhead = $effeciency_overhead / $i_overhead;
-			$unpackaged_overhead = $productionUnits_overhead - $unpackaged_overhead - $scraps_overhead;
+			$temp = $productionUnits_overhead - ($unpackaged_overhead + $scraps_overhead);
+			$unpackaged_overhead = $temp;
 			
 			$effeciency_bracelet = $effeciency_bracelet / $i_bracelet;
 			$unpackaged_bracelet = $productionUnits_bracelet - $unpackaged_bracelet - $scraps_bracelet;
