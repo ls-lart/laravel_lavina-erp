@@ -12,9 +12,10 @@
 	<!--<li role="presenstation" class="active"><a href="#workorders" aria-controls="workorders" role="tab" data-toggle="tab"><strong>Workorders</strong></a></li>
 	<li role="presenstation"><a href="#BOMS" aria-controls="BOMS" role="tab" data-toggle="tab"><strong>BOMs</strong></a></li>
 	<li role="presenstation"><a href="#TPMS" aria-controls="TPMS" role="tab" data-toggle="tab"><strong>TPMS & Breakdowns</strong></a></li>-->
-	<li role="presenstation" class="active"><a href="#MShiftReport" aria-controls="MShiftReport" role="tab" data-toggle="tab"><strong>Manfacturing Log</strong></a></li>
+	<li role="presenstation" class="active"><a href="#Effeciency" aria-controls="Effeciency" role="tab" data-toggle="tab"><strong> Effeciency & Performance</strong></a></li>
+	<li role="presenstation" ><a href="#MShiftReport" aria-controls="MShiftReport" role="tab" data-toggle="tab"><strong>Manfacturing Log</strong></a></li>
 	<li role="presenstation"><a href="#PShiftReport" aria-controls="PShiftReport" role="tab" data-toggle="tab"><strong>Packaging Log</strong></a></li>
-	<li role="presenstation"><a href="#Effeciency" aria-controls="Effeciency" role="tab" data-toggle="tab"><strong> Effeciency & Performance</strong></a></li>
+	
 
 
 	<li  style="float: right;" >
@@ -35,8 +36,194 @@
 
 	<div class="tab-content">
 		
+		<div  role="tabpanel6" class="tab-pane fade in active" id="Effeciency">
+			<!-- Start .table-responsive -->
+					
+					<!-- dashboard for the effeciency of each machine 
+						each machine vs the shifts production 
+					 -->
+					<!-- dashboard for the effeciency of shift leaders -->
+					<!-- dashboard for the effeciency of product packaging  -->
+					<!-- dashboard for the effeciency of machine health -->
+					<!-- dashboard for the effeciency of cost effeciency  -->
 
-		<div  role="tabpanel4" class="tab-pane fade in active" id="MShiftReport">
+			<!-- / .table-responsive -->
+			@php
+			$productionUnits_all_masks = 0;
+			$effeciency_all_masks = 0;
+			$breakdowns_all_masks = 0;
+
+			$productionUnits_earloop = 0;
+			$effeciency_earloop = 0;
+			$breakdowns_earloop = 0;
+			$scraps_earloop = 0;
+			$unpackaged_earloop = 0;
+			$i_earloop = 0;
+
+			$productionUnits_tieon = 0;
+			$effeciency_tieon = 0;
+			$breakdowns_tieon = 0;
+			$scraps_tieon = 0;
+			$unpackaged_tieon = 0;
+			$i_tieon = 0;
+
+			$i = 0;
+			$j = 0;
+
+			foreach ($manfacturing_shifts as $shift){
+
+				if($shift->machine_id == 1){
+					$effeciency_all_masks = $effeciency_all_masks + floatval($shift->production_effeciency);
+					$j++;
+					$breakdowns_all_masks = $breakdowns_all_masks + $shift->total_breakdown_duration ;
+				}
+
+				if($shift->machine_id == 5){
+					$effeciency_earloop = $effeciency_earloop + floatval($shift->production_effeciency);
+					$breakdowns_earloop = $breakdowns_earloop + floatval($shift->total_breakdown_duration);
+					$i_earloop++;
+				}
+
+				if($shift->machine_id == 6){
+					$effeciency_tieon = $effeciency_tieon + floatval($shift->production_effeciency);
+					$breakdowns_tieon = $breakdowns_tieon + floatval($shift->total_breakdown_duration);
+					$i_tieon++;
+				}
+
+
+						
+				if($shift->machine_id == 5 || $shift->machine_id == 6 ){
+				
+					$wip = App\WipProduction::where('shift_id',$shift->id)->first(); 
+					if($wip){
+
+						if($shift->machine_id == 5){
+							$productionUnits_earloop = $productionUnits_earloop + intval($wip->quantity);
+							$scraps_earloop = $scraps_earloop + intval($wip->scraps);
+							$unpackaged_earloop = $unpackaged_earloop + intval($wip->packaged);
+						}
+
+						if($shift->machine_id == 6){
+							$productionUnits_tieon = $productionUnits_tieon + intval($wip->quantity);
+							$scraps_tieon = $scraps_tieon + intval($wip->scraps);
+							$unpackaged_tieon = $unpackaged_tieon + intval($wip->packaged);
+						}
+
+						$productionUnits_all_masks = $productionUnits_all_masks + intval($wip->quantity);	
+					}
+					$i++;
+				}
+						
+			}
+
+			$effeciency_all_masks = $effeciency_all_masks / $j;
+
+			$effeciency_earloop = $effeciency_earloop / $i_earloop;
+			$unpackaged_earloop = $productionUnits_earloop - $unpackaged_earloop - $scraps_earloop;
+
+			$effeciency_tieon = $effeciency_tieon / $i_tieon;
+			$unpackaged_tieon = $productionUnits_tieon - $unpackaged_tieon - $scraps_tieon;
+			
+			@endphp
+
+			
+
+			<div class="row">
+			
+				<div class="col-md-10 col-md-offset-1 card">
+					<div class="row">
+						
+						<div class="col-md-8">
+							<h4 class="text-left">Face Mask Machine 1 - Overall</h4>
+							<div id="chartdiv" style="width:auto; height:400px; margin:10px auto;"></div>
+						</div>
+						<div class="col-md-4" style="padding-top: 5rem;">
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Production Units</h5>
+								<h3>{{ number_format($productionUnits_all_masks, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Total Effeciency</h5>
+								<h3>{{  number_format($effeciency_all_masks, 2, '.', ',') }}%</h3>
+							</div>
+							<!--<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Unpackaged Units</h5>
+								<h3>30,000</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Scraps</h5>
+								<h3>13,000</h3>
+							</div>-->
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Total Breakdown</h5>
+								<h3>{{$breakdowns_all_masks/60}} hours</h3>
+							</div>
+						</div>
+
+
+						<div class="col-md-8">
+							<h4 class="text-left">Ear Loop Mask Machine 1 - Overall</h4>
+							<div id="chartdiv_earloop" style="width:auto; height:400px; margin:10px auto;"></div>
+						</div>
+						<div class="col-md-4" style="padding-top: 5rem;">
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Production Units</h5>
+								<h3>{{ number_format($productionUnits_earloop, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Total Effeciency</h5>
+								<h3>{{  number_format($effeciency_earloop, 2, '.', ',') }}%</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Unpackaged Units</h5>
+								<h3>{{number_format($unpackaged_earloop, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Scraps</h5>
+								<h3>{{ number_format($scraps_earloop, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Total Breakdown</h5>
+								<h3>{{$breakdowns_earloop/60}} hours</h3>
+							</div>
+						</div>
+
+
+						<div class="col-md-8">
+							<h4 class="text-left">Tie On Mask Machine 1 - Overall</h4>
+							<div id="chartdiv_tieon" style="width:auto; height:400px; margin:10px auto;"></div>
+						</div>
+						<div class="col-md-4" style="padding-top: 5rem;">
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Production Units</h5>
+								<h3>{{ number_format($productionUnits_tieon, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 1rem;">
+								<h5>Total Effeciency</h5>
+								<h3>{{  number_format($effeciency_tieon, 2, '.', ',') }}%</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Unpackaged Units</h5>
+								<h3>{{number_format($unpackaged_tieon, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Scraps</h5>
+								<h3>{{ number_format($scraps_tieon, 0, '.', ',') }}</h3>
+							</div>
+							<div class="col-md-6 text-center" style="margin-top: 2rem;">
+								<h5>Total Breakdown</h5>
+								<h3>{{$breakdowns_tieon/60}} hours</h3>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div  role="tabpanel4" class="tab-pane fade " id="MShiftReport">
 			<!-- Start .table-responsive -->
 			<div class="table-responsive">
 				<table class="table table-responsive table-bordered table-striped">
@@ -281,27 +468,7 @@
 			<!-- / .table-responsive -->
 		</div>
 
-		<div  role="tabpanel6" class="tab-pane fade" id="Effeciency">
-			<!-- Start .table-responsive -->
-					
-					<!-- dashboard for the effeciency of each machine 
-						each machine vs the shifts production 
-					 -->
-					<!-- dashboard for the effeciency of shift leaders -->
-					<!-- dashboard for the effeciency of product packaging  -->
-					<!-- dashboard for the effeciency of machine health -->
-					<!-- dashboard for the effeciency of cost effeciency  -->
-
-			<!-- / .table-responsive -->
-
-			<div class="row">
-				<div class="col-md-12">
-					<h1 class="text-center serial">Daily Revenue</h1>
-					<div id="chartdiv" style="width:auto; height:400px; margin:10px auto;"></div>
-				</div>
-			</div>
-
-		</div>
+		
 
 
 	</div>
@@ -365,13 +532,85 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 // Create series
 var series = chart.series.push(new am4charts.ColumnSeries());
-series.tooltipText = "{date}\n[bold font-size: 17px]value: {valueY}[/]";
-series.dataFields.valueY = "Ear Loop Machine 1";
+series.tooltipText = "{date}\n[bold font-size: 17px] effeciency: {valueY} %[/]";
+series.dataFields.valueY = "Face Mask Machine 1";
 series.dataFields.dateX = "date";
-series.strokeDasharray = 3;
+//series.strokeDasharray = 3;
 series.strokeWidth = 2
 series.strokeOpacity = 0.3;
-series.strokeDasharray = "3,3";
+//series.strokeDasharray = "3,3";
+series.name = "Face Mask Machine 1";
+
+var bullet = series.bullets.push(new am4charts.CircleBullet());
+bullet.strokeWidth = 2;
+bullet.stroke = am4core.color("#fff");
+bullet.setStateOnChildren = true;
+bullet.propertyFields.fillOpacity = "opacity";
+bullet.propertyFields.strokeOpacity = "opacity";
+
+var hoverState = bullet.states.create("hover");
+hoverState.properties.scale = 1.7;
+
+var regseries = chart.series.push(new am4charts.LineSeries());
+regseries.dataFields.valueY = "Face Mask Machine 1";
+regseries.dataFields.dateX = "date";
+regseries.strokeWidth = 2;
+regseries.name = "Linear Regression";
+
+regseries.plugins.push(new am4plugins_regression.Regression());
+regseries.method = "linear";
+//regseries.simplify = true;
+
+chart.legend = new am4charts.Legend();
+//chart.cursor = new am4charts.XYCursor();
+
+/*
+var lastTrend = createTrendLine([
+  { "date": "2012-01-17", "value": 16 },
+  { "date": "2012-01-22", "value": 10 }
+]);
+
+// Initial zoom once chart is ready
+lastTrend.events.once("datavalidated", function(){
+  series.xAxis.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
+});
+*/
+
+
+
+// Create chart instance
+var chart = am4core.create("chartdiv_earloop", am4charts.XYChart);
+
+// Enable chart cursor
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.lineX.disabled = true;
+chart.cursor.lineY.disabled = true;
+
+// Enable scrollbar
+chart.scrollbarX = new am4core.Scrollbar();
+
+// Add data
+chart.data = {!! $manfacturingDaily !!};
+
+// Create axes
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis.renderer.grid.template.location = 0.5;
+dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd a";
+dateAxis.renderer.minGridDistance = 40;
+dateAxis.tooltipDateFormat = "MMM dd, yyyy a";
+dateAxis.dateFormats.setKey("day", "dd");
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.tooltipText = "{date}\n[bold font-size: 17px] effeciency: {valueY} %[/]";
+series.dataFields.valueY = "Ear Loop Machine 1";
+series.dataFields.dateX = "date";
+//series.strokeDasharray = 3;
+series.strokeWidth = 2
+series.strokeOpacity = 0.3;
+//series.strokeDasharray = "3,3";
 series.name = "Ear Loop Machine 1";
 
 var bullet = series.bullets.push(new am4charts.CircleBullet());
@@ -395,19 +634,66 @@ regseries.method = "linear";
 //regseries.simplify = true;
 
 chart.legend = new am4charts.Legend();
-//chart.cursor = new am4charts.XYCursor();
 
-/*
-var lastTrend = createTrendLine([
-  { "date": "2012-01-17", "value": 16 },
-  { "date": "2012-01-22", "value": 10 }
-]);
 
-// Initial zoom once chart is ready
-lastTrend.events.once("datavalidated", function(){
-  series.xAxis.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
-});
-*/
+// Create chart instance
+var chart = am4core.create("chartdiv_tieon", am4charts.XYChart);
+
+// Enable chart cursor
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.lineX.disabled = true;
+chart.cursor.lineY.disabled = true;
+
+// Enable scrollbar
+chart.scrollbarX = new am4core.Scrollbar();
+
+// Add data
+chart.data = {!! $manfacturingDaily !!};
+
+// Create axes
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis.renderer.grid.template.location = 0.5;
+dateAxis.dateFormatter.inputDateFormat = "yyyy-MM-dd a";
+dateAxis.renderer.minGridDistance = 40;
+dateAxis.tooltipDateFormat = "MMM dd, yyyy a";
+dateAxis.dateFormats.setKey("day", "dd");
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.tooltipText = "{date}\n[bold font-size: 17px] effeciency: {valueY} %[/]";
+series.dataFields.valueY = "Tie on Machine 1";
+series.dataFields.dateX = "date";
+//series.strokeDasharray = 3;
+series.strokeWidth = 2
+series.strokeOpacity = 0.3;
+//series.strokeDasharray = "3,3";
+series.name = "Tie on Machine 1";
+
+var bullet = series.bullets.push(new am4charts.CircleBullet());
+bullet.strokeWidth = 2;
+bullet.stroke = am4core.color("#fff");
+bullet.setStateOnChildren = true;
+bullet.propertyFields.fillOpacity = "opacity";
+bullet.propertyFields.strokeOpacity = "opacity";
+
+var hoverState = bullet.states.create("hover");
+hoverState.properties.scale = 1.7;
+
+var regseries = chart.series.push(new am4charts.LineSeries());
+regseries.dataFields.valueY = "Tie on Machine 1";
+regseries.dataFields.dateX = "date";
+regseries.strokeWidth = 2;
+regseries.name = "Linear Regression";
+
+regseries.plugins.push(new am4plugins_regression.Regression());
+regseries.method = "linear";
+//regseries.simplify = true;
+
+chart.legend = new am4charts.Legend();
+
+
 }); // end am4core.ready()
 
 
