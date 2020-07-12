@@ -44,7 +44,7 @@ class ProductionController extends Controller
 
         $adjs = ShiftLog::where('machine_id',3)->where('manfacturing',1)->get();
         foreach ($adjs as $key => $value) {
-            $value->production_effeciency = $value->production_effeciency *90 / 50;
+            $value->production_effeciency = $value->production_effeciency *90 / 60;
             $value->save();
         }
 
