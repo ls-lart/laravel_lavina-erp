@@ -427,7 +427,7 @@
 							<th>Operation Duration</th>
 							<th>Operators</th>
 							<th>Production Effeciency</th>
-							<th>Total Breakdown Duration (Min)</th>
+							<th>Breakdown Duration (Min)</th>
 							<th>Packaged</th>
 							<th>Scrap</th>
 							<th>Notes</th>
@@ -448,7 +448,29 @@
 						</tr>
 						@else
 						@endif
-						<tr>
+						
+						@php
+								$class = '';
+								$wip = App\WipProduction::where('shift_id',$shift->id)->first();
+					
+								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
+								$scr = 0;
+								foreach ($scraps as $scrap){
+									$scr = $scr + $scrap->amount ;
+								}
+
+								/*if($wip){
+									if( ($wip->qunatity == ($wip->packaged + $scr) ) ){
+										$class = 'success';
+									}
+									else{
+										$class = 'danger'; 	
+									}
+								}*/
+								
+						@endphp
+
+						<tr class="{{$class}}" >
 							@if($i == 0)
 								<td>{{ $shift->shift_type }}</td>
 								<td style="width: 100px;">{{ date("Y-m-d", strtotime($shift->shift_date)) }}</td>
@@ -471,9 +493,7 @@
 							<td>{{ App\Machines::findorfail($shift->machine_id)->name }}</td>
 							
 							
-							@php
-								$wip = App\WipProduction::where('shift_id',$shift->id)->first()
-							@endphp
+							
 
 							@if($wip)
 							<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ $wip->product->image }}"/></td>
@@ -487,10 +507,21 @@
 							<td></td>
 							<td></td>
 							@endif
+
+							@if($shift->machine_id == 1)
+							<td></td>
+							<td></td>
+							<td></td>
+							@else
 							<td>{{ $shift->operation_duration }}</td>
 							<td>{{ $shift->workers }}</td>
-
 							<td>{{ number_format((float)$shift->production_effeciency, 2, '.', '') }} %</td>
+							@endif
+
+							
+							
+
+							
 							<td>{{ $shift->total_breakdown_duration }}</td>
 							@if($wip)
 							<td>{{ $wip->packaged }}</td>
@@ -498,17 +529,25 @@
 							<td></td>
 							@endif
 
-							@php
-								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
-								$scr = 0;
-								foreach ($scraps as $scrap){
-									$scr = $scr + $scrap->amount ;
-								}
-								
-							@endphp
+							
 
-									
-							<td>{{$scr}}</td>
+							@if($shift->machine_id == 1)
+							<td></td>
+							<style type="text/css">.bold{
+								font-weight: bold;
+							}</style>
+							@else
+								@php
+									$class="";
+									if($wip && ( $scr/$wip->quantity *100 > 5 ))
+										$class="danger bold";
+								@endphp
+							<td class="{{$class}}">{{$scr}} 
+							
+							</td>
+							@endif
+
+							
 							<td>{{ $shift->notes }}</td>
 
 							@if($i == 0)

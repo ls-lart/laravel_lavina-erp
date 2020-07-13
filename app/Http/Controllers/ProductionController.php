@@ -254,6 +254,7 @@ class ProductionController extends Controller
             $shift_log->scrap = $request->scrap[$key];
             $shift_log->notes = $request->notes[$key];
             $shift_log->machine_id = $request->product[$key];
+            $shift_log->log_id = $value;
             $shift_log->save();
 
 

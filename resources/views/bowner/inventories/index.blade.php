@@ -48,6 +48,7 @@
                   <th>Cost</th>
                   <th>UOM</th>
                   <th>Available Qty</th>
+                  <th style="background-color: white;">Carton / Bale (2000 PCs)</th>
                   <th>Warehouse</th>
                   <!--<th>VAT (%)</th>-->
                   <th>Last Update</th>
@@ -64,6 +65,7 @@
                   <td>{{$product->cost}}</td>
                   <td>{{$product->unit->name}}</td>
                   <td>{{$product->quantity}}</td>
+                  <td style="background-color: white;">{{$product->quantity *$product->unit->equi / 2000 }}</td>
                   <td>{{$product->warehouse->name}}</td>
                   <!--<td>{{$product->vat_rate}}</td>-->
                   <td>{{date("d-m-Y", strtotime($product->updated_at))}}</td>
@@ -358,7 +360,7 @@
             </tbody>
          </table>
       </div>
-    
+
       <!-- /.table-responsive -->
       <!-- / View Purchasing Material -->
    </div>
