@@ -14,4 +14,5 @@ class ShiftLog extends Model
     {
     	return $this->belongsTo('App\Machines');
     }
+    
 }

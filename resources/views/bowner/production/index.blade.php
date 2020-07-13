@@ -456,7 +456,7 @@
 								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
 								$scr = 0;
 								foreach ($scraps as $scrap){
-									$scr = $scr + $scrap->amount ;
+									$scr = $scr + (int)$scrap->amount ;
 								}
 
 								/*if($wip){
@@ -651,10 +651,19 @@
 							<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ App\Product::findorfail($shift->machine_id)->image }}"/></td>
 							
 							@php 
-								$wip = App\WipProduction::where('shift_id',$shift->id)->first(); 
+								$wip = App\WipProduction::where('shift_id',$shift->id)->first();
+								$shift_man =  App\ShiftLog::where('id',$shift->log_id)->first();
+								$wip_man = App\WipProduction::where('shift_id',$shift->log_id)->first();
 							@endphp 	
-							<td>{{ $wip->product->name }}</td>
+							<td>{{ $wip->product->name }}
 
+									@if($shift_man)
+									 <p style="padding: 10px; background-color: white;"> <strong>{{$wip_man->quantity}}</strong> :
+									{{$shift_man->shift_type}}  وردية - يوم {{ date("Y-m-d", strtotime($shift_man->shift_date)) }}  -   {{$shift_man->human->name}}
+									
+									</p>
+									@endif
+							</td>		
 							
 							<td>{{ $wip->quantity }}</td>
 							<td>{{ $shift->operation_duration }}</td>
@@ -668,11 +677,13 @@
 								@endphp
 								@if($scraps)
 									@foreach($scraps as $scrap)
+
 									 {{ $scrap->amount }}
 
-								
 									@endforeach
 								@endif	
+
+
 							</td>
 							<td>{{ $shift->notes }}</td>
 							<!--<td> <div style="display: inline-flex;">
