@@ -24,7 +24,7 @@
 		</div>
 		
 			<div class="col-sm-2" style="border-radius: 5px;text-align: left;margin-bottom: 2.5rem;margin-top: 2px;">
-				<a href="{{route('production.list.last.manafacturing')}}"  style="padding:15px" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
+				<a href="{{route('production.list.last.manafacturing')}}"  style="padding:15px;font-size: 13px;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
 			</div>
 
 	@endif 
@@ -44,7 +44,7 @@
 		</div>
 		
 			<div class="col-sm-2" style="border-radius: 5px;text-align: left;margin-bottom: 2.5rem;margin-top: 2px;">
-				<a href="{{route('production.list.last.packaging')}}"  style="padding:15px" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
+				<a href="{{route('production.list.last.packaging')}}"  style="padding:15px;font-size: 13px;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
 			</div>
 		
 	
