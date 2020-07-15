@@ -321,7 +321,7 @@ class ProductionController extends Controller
                 $packaged = 0;
         
 
-            if($request->done && $request->done[$key]){
+            if($request->done[$key]){
                 // the amount
                  $scrap = new Scraps();
                  $scrap->shift_id = $value;
