@@ -324,7 +324,9 @@ class ProductionController extends Controller
 
             if(isset($request->done[$key])) {
 
-                if($request->done[$key] == true){
+                if($request->done[$key] == 1){
+
+                    Log::info('here');
                 // the amount
                  $scrap = new Scraps();
                  $scrap->shift_id = $value;
