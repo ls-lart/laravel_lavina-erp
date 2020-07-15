@@ -286,7 +286,7 @@ class ProductionController extends Controller
           //  Log::info($key);
 
             // now save the shift info 
-        if($request->quantity[$key] > 0){
+        if($request->quantity[$key] > 0 || $request->done[$key] === '1'){
 
             $shift_log = new ShiftLog();
             $shift_log->manfacturing = 0;
@@ -343,7 +343,7 @@ class ProductionController extends Controller
                  $shift_log->save();
 
                  $wip->scraps = $wip->scraps + $scrap->amount;
-                }
+            }
             
 
             if($wip->quantity > 0)
@@ -354,7 +354,7 @@ class ProductionController extends Controller
             }    */
 
 
-            //$wip->save();
+            $wip->save();
 
             $product = $wip->product;
             $product->quantity = $product->quantity + $packaged;
