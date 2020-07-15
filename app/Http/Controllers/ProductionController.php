@@ -319,14 +319,16 @@ class ProductionController extends Controller
                 $packaged = $request->quantity[$key] / $wip->product->unit->equi ; 
             else
                 $packaged = 0;
+
         
             Log::info($request);
 
             if( isset($request->done[$key]) ) {
 
-                if($request->done[$key] == true){
+                if($request->done[$key] == true ){
 
-                    Log::info('here');
+                Log::info('here SAMIR');
+
                 // the amount
                  $scrap = new Scraps();
                  $scrap->shift_id = $value;
