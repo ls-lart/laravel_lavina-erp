@@ -234,6 +234,7 @@ class ProductionController extends Controller
 
         //Log::info($request);
 
+        $shift_duration = 11.5;
 
         // loop throught the shift 
 
@@ -250,8 +251,8 @@ class ProductionController extends Controller
             $shift_log->human_id = $request->shift_leader;
             $shift_log->shift_type = $request->shift_type;
             $shift_log->shift_date = date("Y-m-d", strtotime($request->shift_date));
-            $shift_log->operation_duration = $request->duration[$key];
-            $shift_log->scrap = $request->scrap[$key];
+            $shift_log->operation_duration = $shift_duration;//$request->duration[$key];
+            //$shift_log->scrap = $request->scrap[$key];
             $shift_log->notes = $request->notes[$key];
             $shift_log->machine_id = $request->product[$key];
             $shift_log->log_id = $value;
@@ -268,33 +269,41 @@ class ProductionController extends Controller
             $wip->packaging = 1;
             //if($wip->quantity > 0)
             $wip->save();
-
-
-            $scrap = new Scraps();
-            $scrap->shift_id = $value;
-            $scrap->product_id = $request->product[$key];
-            $scrap->packaging_id = $shift_log->id;
-            $scrap->amount = $request->scrap[$key];
-            $scrap->save();
-
-
             
             $wip = WipProduction::where('shift_id',$value)->first();
+
             if($wip->quantity > 0)
                 $packaged = $request->quantity[$key] / $wip->product->unit->equi ; 
             else
                 $packaged = 0;
         
 
-            if($request->done &&$request->done[$key])
-                $wip->quantity = 0;
-            else
-                if($wip->quantity > 0)
-                    $wip->packaged = $wip->packaged + $request->quantity[$key];
+            if($request->done && $request->done[$key]){
+                // the amount
+                 $scrap = new Scraps();
+                 $scrap->shift_id = $value;
+                 $scrap->product_id = $request->product[$key];
+                 $scrap->packaging_id = $shift_log->id;
+                 // the difference in the value of 
+                 $scrap->amount =  $request->production_qunatity[$key] - $request->quantity[$key];
+                 //$request->scrap[$key];
+                 $scrap->save();
 
-            if($request->scrap[$key] > 0){
-                $wip->scraps = $wip->scraps + $request->scrap[$key];
-            }    
+                 $shift_log->scrap = $scrap->amount;
+                 $shift_log->save();
+
+                 $wip->scraps = $wip->scraps + $scrap->amount;
+
+            }else{
+                
+            }
+
+            if($wip->quantity > 0)
+                $wip->packaged = $wip->packaged + $request->quantity[$key];
+
+           /* if($request->scrap[$key] > 0){
+                
+            }    */
 
 
             $wip->save();
@@ -333,6 +342,13 @@ class ProductionController extends Controller
   
 
        // Log::info($request);
+
+        $shift_duration = 11.5;
+        $request->operation_duration_machine_1_ear_loop = $shift_duration;
+        $request->operation_duration_machine_1_tie_on = $shift_duration;
+        $request->operation_duration_machine_over_shoes = $shift_duration;
+        $request->operation_duration_machine_over_head = $shift_duration;
+        $request->operation_duration_machine_bracelet = $shift_duration;
 
 
         // ear loop 
@@ -715,7 +731,6 @@ class ProductionController extends Controller
             $wip = WipProduction::where('shift_id',$value->id)->delete();
             $shift_log_details = ShiftLogDetails::where('log_id',$value->id)->delete();
             $value->delete();
-
 
             // delete the bom 
             // delete 

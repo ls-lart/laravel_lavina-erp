@@ -59,14 +59,14 @@
                height: auto;
                margin: 0 auto;"src="{{$wip->product->image}}">
          </div>
-         <div class="form-group col-sm-4" >
+         <div class="form-group col-sm-5" >
             <label>{{$wip->product->name}}</label>
             <br>
             <br>
-            <p style="width: 100%;">
+            <p style="width: 100%;padding-right: 15px;">
                <span style="">منتج جاهز للتعبئة</span> <strong style="float: right;color: #a94442;">{{$wip->quantity - $wip->packaged - $wip->scraps}}</strong>
             </p>
-            </p style="width: 100%;"><span style="">إطبع هذا الكود في الكراتين المعبأه لهذه الوردية</span><strong style="float: right;color: #31708f;font-size: 1.2rem;">
+            </p style="width: 100%;"><span style="">إطبع هذا الكود في الكراتين المعبأه لهذه الوردية</span><strong style="float: right;color: #31708f;font-size: 1.2rem;padding-right: 15px;">
             @php 
             $orderdate = explode('-',date("y-m-d", strtotime($wip->shift->shift_date)));
             $arr_day = str_split($orderdate[2]);
@@ -93,6 +93,7 @@
             </strong>
             {{ Form::hidden('batch[]', $code ) }}
             {{ Form::hidden('product[]', $wip->product->id ) }}
+            {{ Form::hidden('production_qunatity[]', $wip->quantity - $wip->packaged - $wip->scraps ) }}
             </p>
          </div>
          @php
@@ -101,25 +102,28 @@
          {{ Form::hidden('shift[]', $shift[$i] ) }}
          <div class="form-group col-sm-2" >
             {!! Form::label('quantity', 'Production Quantity / الكمية المعبأة') !!}
-            {!! Form::number('quantity[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
+            {!! Form::number('quantity[]', null, ['class'=>'form-control','max'=>$wip->quantity, 'step'=>'any']) !!}
          </div>
-         <div class="form-group col-sm-2">
+         <!--<div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('duration[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
             {!! Form::label('operators number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
          </div>
-         <div class="form-group col-sm-1">
+         <!--<div class="form-group col-sm-1">
             {!! Form::label('scrap', 'Scrap / الهالك بالقطعه') !!}
             {!! Form::number('scrap[]', null, ['class'=>'form-control', 'step'=>'any']) !!}
+         </div>-->
+      
+         <div class="form-group col-sm-2">
+         {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية' , ['style'=>'font-size:12px;margin-right:10px;']) !!}
+         {!! Form::checkbox('done[]', true, false) !!}
+         <br>
+         <p>عند الانتهاء من تغليف هذه الودية، إضغط هنا لحساب كمية الهالك</p>
          </div>
       </div>
-      <!--<div class="form-group col-sm-3">
-         {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية' , ['style'=>'font-size:12px']) !!}
-         {!! Form::checkbox('done[]', true, false) !!}
-         </div>-->
       <div class="form-group col-sm-10 col-sm-offset-1">
          {!! Form::label('notes', 'Notes / ملحوظات لها علاقة بتغليف هذه الكمية') !!}
          {!! Form::textarea('notes[]', null, ['class'=>'form-control' , 'rows'=>'2']) !!}

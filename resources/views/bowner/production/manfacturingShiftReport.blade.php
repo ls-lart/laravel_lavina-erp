@@ -78,7 +78,7 @@
          <h4 style="text-align: center; width: 100%;">ماكينة ماسك استك ١</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
-         <div class="form-group col-sm-2" style="text-align: center;">
+         <div class="form-group col-sm-2 col-sm-offset-1" style="text-align: center;">
             <img style=" width: 100px;
                height: auto;
                margin: 0 auto;"src="https://pngimg.com/uploads/medical_mask/medical_mask_PNG41.png">
@@ -106,12 +106,12 @@
                <option value="Protect" >Protect / بروتكت</option>
             </select>
          </div>
-         <div class="form-group col-sm-2">
+         <!--<div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('operation_duration_machine_1_ear_loop', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
-            {!! Form::label('operation duration', 'Operators Number / عدد العاملين') !!}
+            {!! Form::label('operators number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators_machine_1_ear_loop', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
          </div>
       </div>
@@ -151,7 +151,7 @@
          <h4 style="text-align: center; width: 100%;">ماكينة ماسك رباط ١</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
-         <div class="form-group col-sm-2" style="text-align: center;">
+         <div class="form-group col-sm-2 col-sm-offset-1" style="text-align: center;">
             <img style=" width: 100px;
                height: auto;
                margin: 0 auto;"src="https://images-na.ssl-images-amazon.com/images/I/51Djy%2BFnGzL._SL1280_.jpg">
@@ -179,10 +179,11 @@
                <option value="Protect" >Protect / بروتكت</option>
             </select>
          </div>
-         <div class="form-group col-sm-2">
+          
+         <!--<div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('operation_duration_machine_1_tie_on', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
             {!! Form::label('Operators Number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators_machine_1_tie_on', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
@@ -224,7 +225,7 @@
          <h4 style="text-align: center; width: 100%;">ماكينة اوفر شوز</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
-         <div class="form-group col-sm-2" style="text-align: center;">
+         <div class="form-group col-sm-2 col-sm-offset-1" style="text-align: center;">
             <img style=" width: 100px;
                height: auto;
                margin: 0 auto;"src="https://ae01.alicdn.com/kf/H87367f107b7d493aa21cc870dc83ef64n.jpg">
@@ -246,10 +247,10 @@
                <option value="Ultra" >Ultra / الترا</option>
             </select>
          </div>
-         <div class="form-group col-sm-2">
+        <!-- <div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('operation_duration_machine_over_shoes', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
             {!! Form::label('Operators Number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators_machine_over_shoes', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
@@ -291,7 +292,7 @@
          <h4 style="text-align: center; width: 100%;">ماكينة اوفر هيد</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
-         <div class="form-group col-sm-2" style="text-align: center;">
+         <div class="form-group col-sm-2 col-sm-offset-1" style="text-align: center;">
             <img style=" width: 100px;
                height: auto;
                margin: 0 auto;"src="https://5.imimg.com/data5/GI/ND/MY-1424298/disposable-bouffant-cap-500x500.jpg">
@@ -316,10 +317,10 @@
                <option value="Protect" >Protect / بروتكت</option>
             </select>
          </div>
-         <div class="form-group col-sm-2">
+         <!--<div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('operation_duration_machine_over_head', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
             {!! Form::label('Operators Number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators_machine_over_head', null, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
@@ -361,7 +362,7 @@
          <h4 style="text-align: center; width: 100%;">ماكينة الأسورة</h4>
       </div>
       <div class="col-sm-10 col-sm-offset-1" style="background-color: white;padding: 10px; margin-bottom: 1rem;">
-         <div class="form-group col-sm-2" style="text-align: center;">
+         <div class="form-group col-sm-2 col-sm-offset-1" style="text-align: center;">
             <img style=" width: 100px;
                height: auto;
                margin: 0 auto;"src="https://5.imimg.com/data5/OM/BW/MY-14078910/patient-identification-band-2c-child-28pack-of-100-pcs-29-500x500.jpg">
@@ -384,10 +385,10 @@
                <option value="Kids" >Kids / أطفال</option>
             </select>
          </div>
-         <div class="form-group col-sm-2">
+         <!--<div class="form-group col-sm-2">
             {!! Form::label('operation duration', 'Operation Duration / مدة التشغيل بالساعة') !!}
             {!! Form::number('operation_duration_machine_bracelet', 0, ['class'=>'form-control', 'step'=>'any', 'required']) !!}
-         </div>
+         </div>-->
          <div class="form-group col-sm-2">
             {!! Form::label('Operators Number', 'Operators Number / عدد العاملين') !!}
             {!! Form::number('operators_machine_bracelet', 0, ['class'=>'form-control', 'step'=>'any', 'required']) !!}

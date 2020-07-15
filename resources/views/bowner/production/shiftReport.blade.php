@@ -8,46 +8,46 @@
 
 	@if(Auth::user()->access == 'manfacturing' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
 
-	<div class="col-sm-2"></div>
-	<div class=" col-sm-3" style="text-align: center;" id="btn-manfacturing-div">
-		<div class="row card">
-			<a href="/production/shift_report/show/manafacturing" id="btn-manfacturing">
-				<label>Manfacturing / تصنيع</label>
-				<br>
-				<br>
-				<i class="fa fa-industry" style="font-size: 5rem;"></i>
+	
+
+
+
+	<div class="col-sm-8 col-sm-offset-1 card" style="text-align: left;padding: 15px;cursor: pointer;" id="btn-manfacturing-div">
+
+		
+			<a href="/production/shift_report/show/manafacturing" id="btn-manfacturing" style="cursor: pointer;">
+				<label><i class="fa fa-industry" style="margin-right: 10px;font-size: 15px;"></i> Manfacturing Report / تقرير تصنيع وإنتاج</label>
+			
+				
 			</a>
+		
 		</div>
-		<br>
-		<div class="row">
-			<div class="col-12 " style="border-radius: 5px;text-align: left;margin-bottom: 0.5rem;padding: 1rem;">
-				<a href="{{route('production.list.last.manafacturing')}}" style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات  <span style="margin-left: 10px;"  class="glyphicon glyphicon-list"></span></a>
+		
+			<div class="col-sm-2" style="border-radius: 5px;text-align: left;margin-bottom: 2.5rem;margin-top: 2px;">
+				<a href="{{route('production.list.last.manafacturing')}}"  style="padding:15px" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
 			</div>
-		</div>
-	</div>
 
 	@endif 
 
 	@if(Auth::user()->access == 'packaging' || Auth::user()->access == 'production' || Auth::user()->access == 'super_manager' )
 
-	<div class="col-sm-1"></div>
-	<div class="col-sm-3" style="text-align: center;" id="btn-packaging-div">
+	
+	<div class="col-sm-8 col-sm-offset-1 card" style="text-align: left;padding: 15px;cursor: pointer;" id="btn-packaging-div">
 
-		<div class="row card">
-			<a href="/production/shift_report/show/packaging" id="btn-packaging">
-				<label>Packaging / تغليف</label>
-				<br>
-				<br>
-				<i class="fa fa-archive" style="font-size: 5rem;"></i>
+		
+			<a href="/production/shift_report/show/packaging" id="btn-packaging" style="cursor: pointer;">
+				<label><i class="fa fa-archive" style="margin-right: 10px;font-size: 15px;"></i> Packaging Report / تقرير تغليف و تعبئة</label>
+			
+				
 			</a>
+		
 		</div>
-		<br>
-		<div class="row">
-			<div class="col-12 " style="border-radius: 5px;text-align: left;margin-bottom: 0.5rem;padding: 1rem;">
-				<a href="{{route('production.list.last.packaging')}}"  style="padding: 1rem;" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات  <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
+		
+			<div class="col-sm-2" style="border-radius: 5px;text-align: left;margin-bottom: 2.5rem;margin-top: 2px;">
+				<a href="{{route('production.list.last.packaging')}}"  style="padding:15px" class="btn btn-xs btn-default btn-block" data-toggle="tooltip" data-placement="right"  >مدخلات الورديات السابقة <span style="margin-left: 10px;" class="glyphicon glyphicon-list"></span></a>
 			</div>
-		</div>
-	</div>
+		
+	
 
 	@endif 
 </div>
@@ -66,7 +66,7 @@
 @stop
 @section('scripts')
 <script>
-	$(function() {
+	/*$(function() {
 
 		$('input[id="shift_date"]').daterangepicker({
 			format: 'DD-MM-YYYY',
@@ -131,11 +131,7 @@
    	// Click button to add products 
    	$("div.add-button").on('click', 'a.add-product', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -151,11 +147,7 @@
 
    	$("div.add-button").on('click', 'a.add-product-tie-on', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone-tie-on:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -169,11 +161,7 @@
 
    	$("div.add-button").on('click', 'a.add-product-ear-loop', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone-ear-loop:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -186,11 +174,7 @@
 
    	$("div.add-button").on('click', 'a.add-product-overshoes', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone-overshoes:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -206,11 +190,7 @@
 
    	$("div.add-button").on('click', 'a.add-product-overhead', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone-overhead:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -226,11 +206,7 @@
 
    	$("div.add-button").on('click', 'a.add-product-bracelet', function(event) {
    		event.preventDefault();
-   		/*
-   		$("div.row-clone:first").clone()
-   			.insertAfter("div.row-clone:last")
-   			.append("<a class='btn btn-warning remove' style='margin-top:23px;'>Remove</a>");
-   			*/
+   		
    			$cloneInput.clone()
    			.insertAfter("div.row-clone-bracelet:last")
    			.append("<a class='btn btn-danger remove' style='margin-top:23px;'><i class='fa fa-close'></i></a>");
@@ -291,6 +267,6 @@
    		checkSelected();
    	});
 
-   });
+   });*/
 </script>
 @stop

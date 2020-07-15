@@ -19,7 +19,7 @@
 							<th></th>
 							<th>المنتج</th>
 							<th>كميات الانتاج</th>
-							<th>مدة التشغيل</th>
+							<!--<th>مدة التشغيل</th>-->
 							<th>عدد العاملين</th>
 						
 							<th>إجمالي مدة التوقفات</th>
@@ -85,7 +85,7 @@
 							<td></td>
 							<td></td>
 							@endif
-							<td>{{ $shift->operation_duration }}</td>
+							<!--<td>{{ $shift->operation_duration }}</td>-->
 							<td>{{ $shift->workers }}</td>
 
 				
@@ -100,7 +100,8 @@
 								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
 								$scr = 0;
 								foreach ($scraps as $scrap){
-									$scr = $scr + $scrap->amount ;
+									if($scrap->amount)
+										$scr = $scr + $scrap->amount ;
 								}
 								
 							@endphp
@@ -110,7 +111,7 @@
 							<td>{{ $shift->notes }}</td>
 
 							@if($i == 0)
-							<td> <div style="display: inline-flex;">
+							<td> <!--<div style="display: inline-flex;">
 
 								
 								<a class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="right" title="Delete Shift Details" href="{{route('production.MShift.delete',$shift->id)}}"><span class="glyphicon glyphicon-trash"></span></a>
@@ -118,7 +119,7 @@
 
 								
 
-							</div> </td>
+							</div>--> </td>
 							
 								
 							@endif
@@ -128,7 +129,7 @@
 							
 						</tr>
 						@endif
-						
+
 						@php 
 						$i ++;
 						 @endphp

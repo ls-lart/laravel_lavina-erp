@@ -18,13 +18,15 @@
 							
 							<th></th>
 							<th>المنتج</th>
-							<th>تغليف</th>
-							<th>مدة التشغيل</th>
+							<!--<th>كمية الانتاج</th>-->
+							<th>كمية التغليف</th>
+							<!--<th>مدة التشغيل</th>-->
 							<th>عدد العاملين</th>
 						
 							
 							
 							<th>هالك</th>
+							<!--<th>الكمية المتبقية</th>-->
 							<th>ملاحظات</th>
 							<th>Actions</th>
 
@@ -37,7 +39,9 @@
 						@foreach ($packaging_shifts as $shift)
 
 						@php
-								$wip = App\WipProduction::where('shift_id',$shift->id)->first()
+								$wip = App\WipProduction::where('shift_id',$shift->id)->first();
+								$shift_man =  App\ShiftLog::where('id',$shift->log_id)->first();
+								$wip_man = App\WipProduction::where('shift_id',$shift->log_id)->first();
 						@endphp
 
 
@@ -66,43 +70,34 @@
 								<td></td>
 							@endif
 
-
-							
-
-							
-							
-							
-
 							@if($wip)
 							<td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ $wip->product->image }}"/></td>
 
-							<td>{{ $wip->product->name }}</td>
+							<td>{{ $wip->product->name }}
+									@if($shift_man)
+									 	<p style="padding: 10px; background-color: white;font-weight: bold;">
+									 	@if($wip_man) {{$wip_man->quantity}} @endif : 
+									 	{{$shift_man->shift_type}} - وردية  يوم {{ date("Y-m-d", strtotime($shift_man->shift_date)) }}  -   {{$shift_man->human->name}}
+									
+										</p>
+									@endif
 
+							</td>
 							
-							<td>{{ $wip->quantity }}</td>
+							<td><strong>{{ $wip->quantity }}</strong></td>
 							@else
 							<td></td>
 							<td></td>
 							<td></td>
 							@endif
-							<td>{{ $shift->operation_duration }}</td>
+							<!--<td>{{ $shift->operation_duration }}</td>-->
 							<td>{{ $shift->workers }}</td>
 
-				
-							
+							<td>{{$shift->scrap}}</td>
+
+							<th><span style="font-weight: 500;"></span></th>
 							
 
-							@php
-								$scraps = App\Scraps::where('shift_id',$shift->id)->get();
-								$scr = 0;
-								foreach ($scraps as $scrap){
-									$scr = $scr + $scrap->amount ;
-								}
-								
-							@endphp
-
-									
-							<td>{{$scr}}</td>
 							<td>{{ $shift->notes }}</td>
 
 							@if($i == 0)

@@ -603,8 +603,9 @@
 							<th>Shift Leader</th>
 							<th>Product Image</th>
 							<th>Product</th>
+							<th>Production</th>
 							<th>Packaged</th>
-							<th>Operation Duration</th>
+							<!--<th>Operation Duration</th>-->
 							<th>Operators</th>
 							<th>Effeciency</th>
 							<th>Scrap</th>
@@ -658,15 +659,15 @@
 							<td>{{ $wip->product->name }}
 
 									@if($shift_man)
-									 <p style="padding: 10px; background-color: white;"> <strong>{{$wip_man->quantity}}</strong> :
+									 <p style="padding: 10px; background-color: white;">
 									{{$shift_man->shift_type}}  وردية - يوم {{ date("Y-m-d", strtotime($shift_man->shift_date)) }}  -   {{$shift_man->human->name}}
 									
 									</p>
 									@endif
 							</td>		
-							
+							<th><strong>@if($wip_man) {{$wip_man->quantity}} @endif</strong></th>
 							<td>{{ $wip->quantity }}</td>
-							<td>{{ $shift->operation_duration }}</td>
+							<!--<td>{{ $shift->operation_duration }}</td>-->
 							<td>{{ $shift->workers }}</td>
 							<td>{{ number_format((float)$shift->production_effeciency, 2, '.', '') }} %</td>
 							<td>
