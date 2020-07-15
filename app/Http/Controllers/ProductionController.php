@@ -323,9 +323,9 @@ class ProductionController extends Controller
         
             Log::info($request);
 
-            if( isset($request->done[$key]) ) {
+ 
 
-                if($request->done[$key] == '1' ){
+            if($request->done[$key] === '1' ){
 
                 Log::info('here SAMIR');
 
@@ -344,7 +344,7 @@ class ProductionController extends Controller
 
                  $wip->scraps = $wip->scraps + $scrap->amount;
                 }
-            }
+            
 
             if($wip->quantity > 0)
                 $wip->packaged = $wip->packaged + $request->quantity[$key];
