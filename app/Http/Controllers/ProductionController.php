@@ -299,7 +299,7 @@ class ProductionController extends Controller
             $shift_log->notes = $request->notes[$key];
             $shift_log->machine_id = $request->product[$key];
             $shift_log->log_id = $value;
-            //$shift_log->save();
+            $shift_log->save();
 
 
 
@@ -311,7 +311,7 @@ class ProductionController extends Controller
             $wip->shift_id = $shift_log->id;
             $wip->packaging = 1;
             //if($wip->quantity > 0)
-           // $wip->save();
+            $wip->save();
             
             $wip = WipProduction::where('shift_id',$value)->first();
 
@@ -321,13 +321,13 @@ class ProductionController extends Controller
                 $packaged = 0;
 
         
-            Log::info($request);
+            //Log::info($request);
 
  
-            Log::info($key);
+            //Log::info($key);
             if($request->done[$key] === '1' ){
 
-                Log::info('here SAMIR');
+                //Log::info('here SAMIR');
 
                 // the amount
                  $scrap = new Scraps();
@@ -337,10 +337,10 @@ class ProductionController extends Controller
                  // the difference in the value of 
                  $scrap->amount =  $request->production_qunatity[$key] - $request->quantity[$key];
                  //$request->scrap[$key];
-                 //$scrap->save();
+                 $scrap->save();
 
                  $shift_log->scrap = $scrap->amount;
-                 //$shift_log->save();
+                 $shift_log->save();
 
                  $wip->scraps = $wip->scraps + $scrap->amount;
                 }
@@ -358,7 +358,7 @@ class ProductionController extends Controller
 
             $product = $wip->product;
             $product->quantity = $product->quantity + $packaged;
-            //$product->save();
+            $product->save();
 
             // calculate the effeciency for this entry 
 
@@ -373,7 +373,7 @@ class ProductionController extends Controller
                 $stock->quantity = $packaged;
                 $stock->warehouse_id = 0;
                 $stock->notes = $request->batch[$key];
-               // $stock->save();
+                $stock->save();
             }
             
         }
