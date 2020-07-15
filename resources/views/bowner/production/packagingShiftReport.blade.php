@@ -100,6 +100,7 @@
          $shift[$i] = $wip->shift->id;
          @endphp 
          {{ Form::hidden('shift[]', $shift[$i] ) }}
+         {{ Form::hidden('done[]', false) }}
          <div class="form-group col-sm-2" >
             {!! Form::label('quantity', 'Production Quantity / الكمية المعبأة') !!}
             {!! Form::number('quantity[]', null, ['class'=>'form-control','max'=>$wip->quantity, 'step'=>'any']) !!}
@@ -119,7 +120,7 @@
       
          <div class="form-group col-sm-2">
          {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية' , ['style'=>'font-size:12px;margin-right:10px;']) !!}
-         {!! Form::hidden('done[]', false) !!}
+        
          {!! Form::checkbox('done[]', true) !!}
          <br>
          <p>عند الانتهاء من تغليف هذه الودية، إضغط هنا لحساب كمية الهالك</p>
