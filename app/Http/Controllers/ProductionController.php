@@ -322,9 +322,9 @@ class ProductionController extends Controller
         
             Log::info($request);
 
-            if(isset($request->done[$key])) {
+            if( isset($request->done[$key]) ) {
 
-                if($request->done[$key] == 1){
+                if($request->done[$key] == true){
 
                     Log::info('here');
                 // the amount
