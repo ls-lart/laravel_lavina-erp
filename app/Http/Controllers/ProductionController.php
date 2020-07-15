@@ -277,7 +277,7 @@ class ProductionController extends Controller
 
         //Log::info($request);
 
-        $shift_duration = 11.5;
+        $shift_duration = 11;
 
         // loop throught the shift 
 
