@@ -324,7 +324,7 @@ class ProductionController extends Controller
             Log::info($request);
 
  
-
+            Log::info($key);
             if($request->done[$key] === '1' ){
 
                 Log::info('here SAMIR');
