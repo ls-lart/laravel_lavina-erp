@@ -179,6 +179,18 @@ Route::group(['middleware'=>'auth'], function(){
 		'as' =>'production.complete',
 	]);
 
+	Route::get('bowner/production/packaging/log',[
+		'uses' => 'ProductionController@indexPackaging',
+		'as' => 'production.packaging.index'
+
+	]);
+
+	Route::get('bowner/production/manfacturing/log',[
+		'uses' => 'ProductionController@indexManafacturing',
+		'as' => 'production.manfacturing.index'
+
+	]);
+
 	Route::get('bowner/production/bom/new',[
 		'uses' => 'ProductionController@BOM',
 		'as' => 'production.bom.index'

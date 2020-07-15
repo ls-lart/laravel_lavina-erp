@@ -23,14 +23,13 @@
 <div class="container body">
     <div class="main_container">
          <!-- sidebar menu -->
-
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
                         <!--<h3>{{ Auth::user()->role->name }}</h3>-->
                         <ul class="nav side-menu">
                             <li><a href="{{url('/')}}" class="">
                                 <img style="    width: auto;
-    margin-top: -10px;
+    margin-top: 5px;
     margin-left: 15px;
     margin-right: 15px;
     height: 30px;" src="{{ asset('images/logo.jpg') }}"></a>
@@ -42,22 +41,54 @@
                                 
                             </li> 
                             @endif
+
+                          
+
+
                             
                             
                              @if(Auth::user()->access == 'production' || Auth::user()->access == 'super_manager')
-                                <li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
+                                <!--<li><a href="{{ route('production.index') }}"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
+                                </li>-->
+
+
+                               <li>
+                                    <a href="{{ route('production.index') }}" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span>
+                                    </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                
+                                <li>
+                                    <a style="padding: 1rem;" href="{{ route('production.index') }}" > Production Dashboard</a>
+                                    
                                 </li>
+                                <li>
+                                   <a style="padding: 1rem;" href="{{ route('production.manfacturing.index') }}" > Manfacturing Log</a>
+                                </li>
+                                <li>
+                                    <a style="padding: 1rem;" href="{{ route('production.packaging.index') }}" > Packaging Log</a>
+                                </li>
+                               <li class="divider"></li>
+                                <li>
+                                    <a style="padding: 1rem;" href="{{route('production.shift.show')}}">Shift Reports</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+
+
+
+
                             @else
                                 <li><a href="#"><i class="fa fa-industry"></i> Production <span class="fa fa-industry"></span></a>
                                 </li>
                             @endif                
 
                             @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'inv_manager')
-                            
                             <li><a href="{{ route('bowner.inventories.index') }} "><i class="fa fa-cubes" ></i>Inventory</a>
-                                
                             </li>
-
                              @endif 
 
                             @if(Auth::user()->access == 'super_manager' || Auth::user()->access == 'hr_manager')
@@ -82,15 +113,7 @@
                                 <span class="fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <!--
-                                <li><a href="javascript:;"> Profile</a></li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span class="badge bg-red pull-right">100%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                </li>
-                                -->
+                            
                                 <li>
                                     <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>

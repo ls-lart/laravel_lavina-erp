@@ -27,7 +27,7 @@ use Log;
 
 class ProductionController extends Controller
 {
-    public function index()
+   /* public function index()
     {
     	$orders = Order::where('deliver', 0)->where('submit', 1)->get();
         $products = Product::pluck('quantity','id');
@@ -36,17 +36,7 @@ class ProductionController extends Controller
             $flag[$key] = 0;
         }
 
-        /*$adjs = ShiftLog::where('machine_id',2)->where('manfacturing',1)->get();
-        foreach ($adjs as $key => $value) {
-            $value->production_effeciency = $value->production_effeciency *90 / 50;
-            $value->save();
-        }
-
-        $adjs = ShiftLog::where('machine_id',3)->where('manfacturing',1)->get();
-        foreach ($adjs as $key => $value) {
-            $value->production_effeciency = $value->production_effeciency *90 / 60;
-            $value->save();
-        }*/
+      
 
         $boms =  Bom::all();
         $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->orderBy('shift_type','DESC')->get();
@@ -84,6 +74,59 @@ class ProductionController extends Controller
         $manfacturingDaily = json_encode($manfacturingDaily);
 
     	return view('bowner.production.index', compact('orders', 'products','boms','manfacturing_shifts','packaging_shifts','manfacturingDaily'));
+    }*/
+    public function index()
+    {
+       
+        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->orderBy('shift_type','DESC')->get();
+        
+        $manfacturingDaily = [];
+        $orderMonthly = [];
+        $orderYearly = [];
+        $i = 0;
+        foreach ($manfacturing_shifts as $key => $shift) {
+            // Get Daily Data
+               // if ($i == 0) {
+            
+                   
+                    if($shift->shift_type == 'morning'){
+                         $manfacturingDaily[$i][$shift->machine->name] = floatval(number_format((float)$shift->production_effeciency, 2, '.', ''));
+                        $date = new \DateTime($shift->shift_date);
+                        $date->setTime(7,0);
+                        $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
+                    }
+                    else if($shift->shift_type == 'night'){ 
+                         $manfacturingDaily[$i][$shift->machine->name] = floatval(number_format((float)$shift->production_effeciency, 2, '.', ''));
+                        $date = new \DateTime($shift->shift_date);
+                        $date->setTime(19,0);
+                        $manfacturingDaily[$i]['date'] = date("Y-m-d g:i a", $date->getTimestamp());
+                     }
+                    else{}   
+
+                    $i++; 
+               
+        }
+        $manfacturingDaily = array_reverse($manfacturingDaily);
+        $manfacturingDaily = json_encode($manfacturingDaily);
+
+        return view('bowner.production.index', compact('manfacturing_shifts','manfacturingDaily'));
+    }
+    public function indexManafacturing()
+    {
+       
+        $manfacturing_shifts = ShiftLog::where('manfacturing',1)->orderBy('shift_date','DESC')->orderBy('shift_type','DESC')->get();
+       
+        return view('bowner.production.manfacturingLog', compact('manfacturing_shifts'));
+    }
+    public function indexPackaging()
+    {
+        
+
+        $packaging_shifts = ShiftLog::where('manfacturing',0)->orderBy('shift_date','DESC')->get();
+
+        
+
+        return view('bowner.production.packagingLog', compact('packaging_shifts'));
     }
 
     public function show($id)
