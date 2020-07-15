@@ -337,8 +337,6 @@ class ProductionController extends Controller
 
                  $wip->scraps = $wip->scraps + $scrap->amount;
 
-            }else{
-                
             }
 
             if($wip->quantity > 0)
