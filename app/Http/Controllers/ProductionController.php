@@ -320,7 +320,8 @@ class ProductionController extends Controller
             else
                 $packaged = 0;
         
-
+            Log::info($request);
+            
             if($request->done[$key]){
                 // the amount
                  $scrap = new Scraps();
