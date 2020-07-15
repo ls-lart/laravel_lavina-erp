@@ -119,15 +119,16 @@
          </div>-->
       
          <div class="form-group col-sm-2">
-         {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية' , ['style'=>'font-size:12px;margin-right:10px;']) !!}
-          <select name="done[]" id='done' class="form-control" required>
+         {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية  لحساب كمية الهالك' , ['style'=>'font-size:12px;margin-right:10px;']) !!}
+      
+          <select name="done[]" id='done' class="form-control" required style="margin-top: 3px;">
                
                <option value="0" >لم ينتهى التغليف</option>
                <option value="1" >إنتهى التغليف</option>
                
             </select>
          <br>
-         <p>عند الانتهاء من تغليف هذه الودية، إضغط هنا لحساب كمية الهالك</p>
+         
          </div>
       </div>
       <div class="form-group col-sm-10 col-sm-offset-1">
