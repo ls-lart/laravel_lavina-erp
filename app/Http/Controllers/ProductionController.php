@@ -321,8 +321,10 @@ class ProductionController extends Controller
                 $packaged = 0;
         
             Log::info($request);
-            
-            if($request->done[$key]){
+
+            if(isset($request->done[$key])) {
+
+                if($request->done[$key] == true){
                 // the amount
                  $scrap = new Scraps();
                  $scrap->shift_id = $value;
@@ -337,7 +339,7 @@ class ProductionController extends Controller
                  //$shift_log->save();
 
                  $wip->scraps = $wip->scraps + $scrap->amount;
-
+                }
             }
 
             if($wip->quantity > 0)
