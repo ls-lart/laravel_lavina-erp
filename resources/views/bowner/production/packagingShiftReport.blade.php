@@ -119,8 +119,8 @@
       
          <div class="form-group col-sm-2">
          {!! Form::label('done', 'Done / إكتمل تغليف هذه الوردية' , ['style'=>'font-size:12px;margin-right:10px;']) !!}
-         {!! Form::hidden('done[]',0) !!}
-         {!! Form::checkbox('done[]', true, false) !!}
+         {!! Form::hidden('done[]', false) !!}
+         {!! Form::checkbox('done[]', true) !!}
          <br>
          <p>عند الانتهاء من تغليف هذه الودية، إضغط هنا لحساب كمية الهالك</p>
          </div>
