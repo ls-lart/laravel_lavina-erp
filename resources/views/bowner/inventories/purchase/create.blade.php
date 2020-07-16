@@ -21,8 +21,9 @@
 			{!! Form::label('product_id', 'Product ') !!}
 			<select name="product_id" id="product_id" class="form-control" required>
 			
-			
-					<option value="{{ $product->id }}">{{ $product->name .' ('.$product->unit->name .')'}}</option>
+				@foreach($materials as $material)
+					<option value="{{ $material->id }}">{{ $material->name }}</option>
+				@endforeach	
 			
 			</select>
 			</div>

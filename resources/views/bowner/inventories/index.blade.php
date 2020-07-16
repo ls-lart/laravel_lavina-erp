@@ -63,9 +63,9 @@
                   <td style="background-color: white;text-align: center;padding: 0px;"><img style="height: 50px;"  src="{{$product->image}}"></td>
                   <td><b>{{$product->name}}</b></td>
                   <td>{{$product->cost}}</td>
-                  <td>{{$product->unit->name}}</td>
+                  <td></td>
                   <td>{{$product->quantity}}</td>
-                  <td style="background-color: white;">{{$product->quantity *$product->unit->equi / 2000 }}</td>
+                  <td style="background-color: white;">{{$product->quantity * $product->unit->equi / 2000 }}</td>
                   <td>{{$product->warehouse->name}}</td>
                   <!--<td>{{$product->vat_rate}}</td>-->
                   <td>{{date("d-m-Y", strtotime($product->updated_at))}}</td>

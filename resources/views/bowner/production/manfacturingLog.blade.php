@@ -22,7 +22,7 @@
 							<th>Shift Date</th>
 							<th>Shift Leader</th>
 							<th>Machine</th>
-							<th>Product Image</th>
+							<th >Product Image</th>
 							<th>Product</th>
 							<th>Production</th>
 							<th>Operation Duration</th>
@@ -97,7 +97,7 @@
 							
 
 							@if($wip)
-							<td style="background-color: ;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ $wip->product->image }}"/></td>
+							<td style="background-color:white; ;text-align: center;padding: 0px;"><img style="height: 50px;"  src=" {{ $wip->product->image }}"/></td>
 
 							<td>{{ $wip->product->name }}</td>
 
