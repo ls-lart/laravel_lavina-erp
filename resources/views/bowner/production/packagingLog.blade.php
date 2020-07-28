@@ -72,10 +72,13 @@
 							
 							@php 
 								$wip = App\WipProduction::where('shift_id',$shift->id)->first();
+
 								$shift_man =  App\ShiftLog::where('id',$shift->log_id)->first();
+								
 								$wip_man = App\WipProduction::where('shift_id',$shift->log_id)->first();
+
 							@endphp 	
-							<td>{{ $wip->product->name }}
+							<td>@if($wip){{ $wip->product->name }}
 
 									@if($shift_man)
 									 <p style="padding: 10px; background-color: white;">
@@ -83,6 +86,7 @@
 									
 									</p>
 									@endif
+								@endif		
 							</td>		
 							<th><strong>@if($wip_man) {{$wip_man->quantity}} @endif</strong></th>
 							<td>{{ $wip->quantity }}</td>
@@ -119,7 +123,12 @@
 						@endforeach
 					</tbody>
 				</table>
-				
+					<!-- Pagination -->
+  	<div class="row">
+  		<div class="text-center">
+  			{{ $packaging_shifts->render() }}
+  		</div>
+  	</div>
 			
 			</div>
 			<!-- / .table-responsive -->
