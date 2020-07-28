@@ -89,7 +89,7 @@
 								@endif		
 							</td>		
 							<th><strong>@if($wip_man) {{$wip_man->quantity}} @endif</strong></th>
-							<td>{{ $wip->quantity }}</td>
+							<td>@if($wip) {{ $wip->quantity }} @endif</td>
 							<!--<td>{{ $shift->operation_duration }}</td>-->
 							<td>{{ $shift->workers }}</td>
 							<td>{{ number_format((float)$shift->production_effeciency, 2, '.', '') }} %</td>
