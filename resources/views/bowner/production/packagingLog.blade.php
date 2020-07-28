@@ -126,7 +126,7 @@
 					<!-- Pagination -->
   	<div class="row">
   		<div class="text-center">
-  			
+  			{{ $packaging_shifts->render() }}
   		</div>
   	</div>
 			
